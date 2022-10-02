@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { Header } from "@src/components";
+import { About, Header, Hero } from "@src/components";
 
 const Home: NextPage = () => {
   return (
@@ -9,9 +9,11 @@ const Home: NextPage = () => {
         <title>Paulo Bordignon</title>
         <link rel="icon" href="/favicon.png" />
       </Head>
-      <section className="bg-secondary min-h-screen">
+      <div className="max-w-7xl mx-auto">
         <Header />
-      </section>
+        <Hero />
+        <About />
+      </div>
     </>
   );
 };
