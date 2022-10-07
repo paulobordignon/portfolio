@@ -4,10 +4,18 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#A6D1E6",
+        primary: "#64ffda",
         secondary: "#060b28",
-        text: "#F1EEE9",
-        // "#0A192F" "#060b28" #8FE3CF #DFF6FF #ccd6f6 #6886de #87A2FB #CC3636
+        primaryText: "rgb(255 255 255/1)",
+        secondaryText: "rgb(163 179 188/1)",
+        dark: "rgb(13 17 23/1)",
+        hover: "#b3ffed",
+      },
+      fontFamily: {
+        poppins: ["Poppins", "sans-serif"],
+      },
+      screens: {
+        xs: "475px",
       },
     },
   },

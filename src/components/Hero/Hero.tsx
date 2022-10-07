@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Button } from "../Button";
 
 export function Hero() {
   return (
@@ -6,13 +7,17 @@ export function Hero() {
       initial={{ x: -500, opacity: 0, scale: 0.5 }}
       animate={{ x: 0, opacity: 1, scale: 1 }}
       transition={{ duration: 1 }}
-      className="flex flex-col gap-5 text-primary h-[90vh] md:ml-10 px-5 pt-[15vh] "
+      className="flex flex-col gap-5 text-primaryText h-[90vh] sm:ml-10 px-5 xs:pt-48 pt-20"
     >
-      <p className="text-lg">Hi, My name is</p>
-      <p className="text-6xl text-text font-nunito font-extrabold">
+      <p className="text-lg">Hey! I&apos;m</p>
+      <p className="text-5xl font-extrabold text-gradient xs:text-6xl">
         Paulo Bordignon
       </p>
-      <p className="text-lg text-text">I'm a Full Stack developer.</p>
+      <p className="text-xl text-secondaryText">Full Stack developer.</p>
+      <div className="flex flex-col gap-4 xs:mt-8 mt-10 xs:flex-row">
+        <Button title="Resume" />
+        <Button title="Connect Wallet" />
+      </div>
     </motion.div>
   );
 }

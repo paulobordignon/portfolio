@@ -1,7 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-  background: #060b28;
+  background-color: rgb(13 17 23/1);
+}
+
+.text-gradient {
+  background: radial-gradient(
+    64.18% 64.18% at 71.16% 35.69%,
+    #f0fffb 0.89%,
+    #e0fff8 17.23%,
+    #c1fff0 42.04%,
+    #b2ffed 55.12%,
+    #b3ffed 71.54%,
+    #64ffda 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
 }
