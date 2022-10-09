@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { Header, Hero } from "@src/components";
+import { About, Header, Hero } from "@src/components";
 
 const Home: NextPage = () => {
   return (
@@ -12,6 +12,7 @@ const Home: NextPage = () => {
       <div className="max-w-7xl mx-auto">
         <Header />
         <Hero />
+        <About />
       </div>
     </>
   );
