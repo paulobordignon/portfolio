@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { BsLinkedin, BsGithub } from "react-icons/bs";
 import { MdEmail } from "react-icons/md";
 
@@ -8,9 +9,15 @@ export function Header() {
   return (
     <header className="flex justify-between items-start max-w-7xl mx-auto p-5 text-primary h-[10vh]">
       <div>
-        <p>
-          <Image src={Logo} alt="logo" height={25} width={25} />
-        </p>
+        <Link href={"/"}>
+          <Image
+            className="cursor-pointer scale-95 hover:scale-100 hover:duration-700"
+            src={Logo}
+            alt="logo"
+            height={25}
+            width={25}
+          />
+        </Link>
       </div>
       <div className="flex gap-5 text-xl items-center justify-center">
         <a

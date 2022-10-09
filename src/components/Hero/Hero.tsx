@@ -3,7 +3,7 @@ import { Button } from "../Button";
 
 export function Hero() {
   return (
-    <motion.div
+    <motion.section
       initial={{ x: -500, opacity: 0, scale: 0.5 }}
       animate={{ x: 0, opacity: 1, scale: 1 }}
       transition={{ duration: 1 }}
@@ -18,6 +18,6 @@ export function Hero() {
         <Button title="Resume" />
         <Button title="Connect Wallet" />
       </div>
-    </motion.div>
+    </motion.section>
   );
 }
