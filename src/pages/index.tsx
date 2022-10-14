@@ -15,6 +15,9 @@ const Home: NextPage = () => {
         <About />
         <Projects />
       </main>
+      <footer className="text-secondaryText flex justify-center mt-48 mb-5">
+        Built in 2022
+      </footer>
     </>
   );
 };

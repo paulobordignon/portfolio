@@ -8,7 +8,9 @@ module.exports = {
         secondary: "rgb(13 17 23/1)",
         primaryText: "rgb(255 255 255/1)",
         secondaryText: "rgb(163 179 188/1)",
-        dark: "rgb(13 17 23/1)",
+        background: "rgb(13 17 23/1)",
+        card: "hsla(0,0%,100%,0.03)",
+        cardHover: "hsla(0,0%,100%,0.05)",
         hover: "#b3ffed",
       },
       fontFamily: {
