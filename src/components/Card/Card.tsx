@@ -1,11 +1,44 @@
+import { useCallback, useRef } from "react";
+import { motion, useAnimation } from "framer-motion";
 import Image from "next/image";
-import { Tag } from "../Tag/Tag";
 import { BsGithub } from "react-icons/bs";
 import { FaRegShareSquare } from "react-icons/fa";
+import { Tag } from "../Tag/Tag";
 
 export function Card({ sequence }: any) {
+  const observer = useRef<any>();
+  const animation = useAnimation();
+
+  const aboutRef = useCallback(
+    (node: any) => {
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          animation.start({
+            x: 0,
+            opacity: 1,
+            transition: {
+              duration: 0.8,
+            },
+          });
+        } else {
+          animation.start({
+            x: sequence % 2 ? +50 : -50,
+            opacity: 0,
+          });
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [animation, sequence]
+  );
+
   return (
-    <li className="bg-card lg:bg-transparent hover:bg-cardHover rounded-[10px] xs:p-5 flex hover:duration-700 grayscale-[70%] hover:grayscale-0 scale-95 hover:scale-100">
+    <motion.li
+      animate={animation}
+      ref={aboutRef}
+      className="bg-card lg:bg-transparent hover:bg-cardHover rounded-[10px] xs:p-5 flex hover:duration-700 grayscale-[70%] hover:grayscale-0"
+    >
       <div
         className={`${
           sequence % 2 ? "order-none" : "order-1"
@@ -21,7 +54,9 @@ export function Card({ sequence }: any) {
       </div>
       <div className="text-lg mx-5 lg:basis-3/5">
         <div className="flex justify-between">
-          <p className="text-primaryText mt-5 text-xl">Project 1 {sequence}</p>
+          <p className="text-primaryText mt-5 text-xl font-medium">
+            Project 1 {sequence}
+          </p>
           <div className="flex gap-5 text-secondaryText mt-5">
             <a
               href="https://github.com/paulobordignon"
@@ -54,6 +89,6 @@ export function Card({ sequence }: any) {
           <Tag text="React" />
         </div>
       </div>
-    </li>
+    </motion.li>
   );
 }

@@ -4,8 +4,8 @@ import { Button } from "../Button";
 export function Hero() {
   return (
     <motion.section
-      initial={{ x: -500, opacity: 0, scale: 0.5 }}
-      animate={{ x: 0, opacity: 1, scale: 1 }}
+      initial={{ x: -500, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
       transition={{ duration: 1 }}
       className="flex flex-col gap-5 text-primaryText h-[100vh] sm:ml-10 px-5 xs:justify-start xs:pt-80 justify-center"
     >

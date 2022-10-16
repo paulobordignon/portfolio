@@ -15,7 +15,7 @@ module.exports = {
         hover: "#b3ffed",
       },
       fontFamily: {
-        poppins: ["Poppins", "sans-serif"],
+        sans: ["Nunito", "sans-serif"],
       },
       screens: {
         xs: "475px",
