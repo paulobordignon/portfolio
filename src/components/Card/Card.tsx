@@ -5,7 +5,7 @@ import { FaRegShareSquare } from "react-icons/fa";
 
 export function Card({ sequence }: any) {
   return (
-    <li className="bg-card lg:bg-transparent hover:bg-cardHover rounded-[10px] p-5 flex hover:duration-700 grayscale-[70%] hover:grayscale-0 scale-95 hover:scale-100">
+    <li className="bg-card lg:bg-transparent hover:bg-cardHover rounded-[10px] xs:p-5 flex hover:duration-700 grayscale-[70%] hover:grayscale-0 scale-95 hover:scale-100">
       <div
         className={`${
           sequence % 2 ? "order-none" : "order-1"
@@ -45,7 +45,7 @@ export function Card({ sequence }: any) {
           Created a new project Created a new project Created a new project
           Created a new project Created a new project Created a new project
         </p>
-        <div className="text-secondaryText mt-5 flex gap-2 flex-wrap">
+        <div className="text-secondaryText mt-5 flex gap-2 flex-wrap mb-5">
           <Tag text="React" />
           <Tag text="Tailwind" />
           <Tag text="React Native" />
