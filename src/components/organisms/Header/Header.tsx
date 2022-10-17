@@ -3,7 +3,7 @@ import Link from "next/link";
 import { BsLinkedin, BsGithub } from "react-icons/bs";
 import { MdEmail } from "react-icons/md";
 
-import Logo from "../../../public/logo.png";
+import Logo from "../../../../public/logo.png";
 
 export function Header() {
   return (
@@ -24,14 +24,14 @@ export function Header() {
           <a
             href="https://www.linkedin.com/in/paulobordignon/"
             target={"_blank"}
-            rel="noreferrer"
+            rel="noopener noreferrer"
           >
             <BsLinkedin className="hover:text-hover" />
           </a>
           <a
             href="https://github.com/paulobordignon"
             target={"_blank"}
-            rel="noreferrer"
+            rel="noopener noreferrer"
           >
             <BsGithub className="hover:text-hover" />
           </a>
@@ -39,7 +39,7 @@ export function Header() {
             className="text-2xl"
             href="mailto:phbordignon@outlook.com"
             target={"_blank"}
-            rel="noreferrer"
+            rel="noopener noreferrer"
           >
             <MdEmail className="hover:text-hover" />
           </a>

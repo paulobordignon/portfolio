@@ -3,14 +3,15 @@ import { motion, useAnimation } from "framer-motion";
 import Image from "next/image";
 import { BsGithub } from "react-icons/bs";
 import { FaRegShareSquare } from "react-icons/fa";
-import { Tag } from "../Tag/Tag";
+import { Tag } from "@src/components";
+import { ICard } from "./types";
 
-export function Card({ sequence }: any) {
+export function Card({ sequence }: ICard) {
   const observer = useRef<any>();
   const animation = useAnimation();
 
   const aboutRef = useCallback(
-    (node: any) => {
+    (node: HTMLElement) => {
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting) {
@@ -23,7 +24,7 @@ export function Card({ sequence }: any) {
           });
         } else {
           animation.start({
-            x: sequence % 2 ? +50 : -50,
+            x: sequence % 2 ? 0 : -50,
             opacity: 0,
           });
         }
@@ -61,14 +62,14 @@ export function Card({ sequence }: any) {
             <a
               href="https://github.com/paulobordignon"
               target={"_blank"}
-              rel="noreferrer"
+              rel="noopener noreferrer"
             >
               <FaRegShareSquare className="hover:text-hover" />
             </a>
             <a
               href="https://github.com/paulobordignon"
               target={"_blank"}
-              rel="noreferrer"
+              rel="noopener noreferrer"
             >
               <BsGithub className="hover:text-hover" />
             </a>

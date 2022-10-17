@@ -7,7 +7,7 @@ export function About() {
   const animation = useAnimation();
 
   const aboutRef = useCallback(
-    (node: any) => {
+    (node: HTMLElement) => {
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting) {
