@@ -33,25 +33,23 @@ describe("Projects", function () {
     };
   }
 
-  describe("New Projects", function () {
-    describe("Project all fields", function () {
-      it("Should add a new project", async function () {
-        const { projects, image, title, about, keywords, github, website } =
-          await loadFixture(deployOneYearLockFixture);
+  describe("Add project with all fields", function () {
+    it("Should add a new project", async function () {
+      const { projects, image, title, about, keywords, github, website } =
+        await loadFixture(deployOneYearLockFixture);
 
-        await expect(
-          projects.addProject(image, title, about, keywords, github, website)
-        );
-      });
+      await expect(
+        projects.addProject(image, title, about, keywords, github, website)
+      );
     });
-    describe("Get all projects", function () {
-      it("Should list all projects", async function () {
-        const { projects } = await loadFixture(deployOneYearLockFixture);
 
-        const allProjects = await expect(projects.getAllProjects());
+    it("Should list the new project", async function () {
+      const { projects } = await loadFixture(deployOneYearLockFixture);
 
-        // console.log(ethers.utils.formatEther(allProjects));
-      });
+      const result = await projects.getAllProjects();
+      // console.log(result[0].title);
+
+      expect(result[0].title).to.equal("title");
     });
   });
 });

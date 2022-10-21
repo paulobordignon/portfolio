@@ -20,13 +20,26 @@ contract Projects {
 
   uint private projectId;
 
-  error OnlyMe();
+  address payable private ownerAddress;
 
-  modifier onlyMe {
-    if (msg.sender != 0x6585d1ba166aeBF1e6A88f816e3024BF324D21ad) {
-      revert OnlyMe();
+  constructor ()  {
+    ownerAddress = payable(msg.sender);
+  }
+
+  error OnlyOwner();
+
+  modifier onlyOwner {
+    if (payable(msg.sender) != ownerAddress) {
+      revert OnlyOwner();
     }
     _;
+  }
+
+  function selfDestruct()
+    external
+    onlyOwner
+  {
+    selfdestruct(ownerAddress);
   }
 
   function addProject(
@@ -36,7 +49,7 @@ contract Projects {
     string[] memory _keywords,
     string memory _github,
     string memory _website
-  ) external onlyMe {
+  ) external onlyOwner {
 
     uint _id = projectId++;
 
@@ -50,6 +63,17 @@ contract Projects {
       _github,
       _website
     ));
+  }
+
+  function removeProject(
+    uint _index
+  ) external onlyOwner {
+    // When you delete an element from an array, the array length is the same as before.
+    // To avoid it, we move the element to the last position and then remove it
+    for(uint i = _index; i < myProjects.length-1; i++){
+      myProjects[i] = myProjects[i+1];      
+    }
+    myProjects.pop();
   }
 
   function getAllProjects() public view returns (Project[] memory) {
