@@ -68,7 +68,7 @@ contract Projects {
   function removeProject(
     uint _index
   ) external onlyOwner {
-    // When you delete an element from an array, the array length is the same as before.
+    // In Solidity when you delete an element from an array, the array length is the same as before.
     // To avoid it, we move the element to the last position and then remove it
     for(uint i = _index; i < myProjects.length-1; i++){
       myProjects[i] = myProjects[i+1];      
