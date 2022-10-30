@@ -1,13 +1,9 @@
-# Sample Hardhat Project
+Contracts
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
+All contracts in this folder were built using hardhat. There are three folders one for tests, one for contracts, and one for deploy scripts.
 
-Try running some of the following tasks:
+To execute the tests, run: `npx hardhat test`;
 
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.ts
-```
+To make a local deployment, run: `npx hardhat node` and `npx hardhat run scripts/deploy.ts --network localhost`;
+
+To make a deployment the Goerli network first, fill out your alchemy key and your wallet private key in hardhat.config.js, then run: `npx hardhat run scripts/deploy.ts --network goerli`
