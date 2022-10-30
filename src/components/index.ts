@@ -1,4 +1,5 @@
 export * from "./atoms/Button";
+export * from "./atoms/ButtonWallet";
 export * from "./atoms/Tag";
 export * from "./molecules/Card";
 export * from "./organisms/About";

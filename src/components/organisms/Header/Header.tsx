@@ -26,14 +26,14 @@ export function Header() {
             target={"_blank"}
             rel="noopener noreferrer"
           >
-            <BsLinkedin className="hover:text-hover" />
+            <BsLinkedin className="hover:text-primaryHover" />
           </a>
           <a
             href="https://github.com/paulobordignon"
             target={"_blank"}
             rel="noopener noreferrer"
           >
-            <BsGithub className="hover:text-hover" />
+            <BsGithub className="hover:text-primaryHover" />
           </a>
           <a
             className="text-2xl"
@@ -41,7 +41,7 @@ export function Header() {
             target={"_blank"}
             rel="noopener noreferrer"
           >
-            <MdEmail className="hover:text-hover" />
+            <MdEmail className="hover:text-primaryHover" />
           </a>
         </div>
       </nav>

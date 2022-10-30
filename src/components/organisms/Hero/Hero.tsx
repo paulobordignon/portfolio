@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { Button } from "@src/components";
+
+import { Button, ButtonWallet } from "@src/components";
 
 export function Hero() {
   return (
@@ -16,7 +17,7 @@ export function Hero() {
       <p className="text-xl text-secondaryText">Full Stack developer.</p>
       <div className="flex flex-col gap-4 xs:mt-8 mt-10 xs:flex-row">
         <Button title="Resume" />
-        <Button title="Connect Wallet" />
+        <ButtonWallet />
       </div>
     </motion.section>
   );

@@ -64,14 +64,14 @@ export function Card({ sequence }: ICard) {
               target={"_blank"}
               rel="noopener noreferrer"
             >
-              <FaRegShareSquare className="hover:text-hover" />
+              <FaRegShareSquare className="hover:text-primaryHover" />
             </a>
             <a
               href="https://github.com/paulobordignon"
               target={"_blank"}
               rel="noopener noreferrer"
             >
-              <BsGithub className="hover:text-hover" />
+              <BsGithub className="hover:text-primaryHover" />
             </a>
           </div>
         </div>
