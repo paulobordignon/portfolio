@@ -8,14 +8,13 @@ import {
   darkTheme,
 } from "@rainbow-me/rainbowkit";
 import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
-import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 
-import { About, Footer, Header, Hero, Projects } from "@src/components";
+import { About, Alert, Footer, Header, Hero, Projects } from "@src/components";
 
 const { chains, provider } = configureChains(
   [chain.goerli],
-  [alchemyProvider(), publicProvider()]
+  [publicProvider()]
 );
 
 const { connectors } = getDefaultWallets({
@@ -53,6 +52,10 @@ const Home: NextPage = () => {
           <Projects />
         </main>
         <Footer />
+        <Alert
+          title="Only owner"
+          text="You can connect, but nothing new will be displayed"
+        />
       </RainbowKitProvider>
     </WagmiConfig>
   );

@@ -1,6 +1,6 @@
 export function Footer() {
   return (
-    <footer className="text-secondaryText flex justify-center mt-48 mb-5">
+    <footer className="text-secondaryText flex justify-center mt-48 mb-6">
       <a
         target="_blank"
         href="https://github.com/paulobordignon/portfolio"

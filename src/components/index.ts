@@ -1,3 +1,4 @@
+export * from "./atoms/Alert";
 export * from "./atoms/Button";
 export * from "./atoms/ButtonWallet";
 export * from "./atoms/Tag";
