@@ -17,6 +17,7 @@ module.exports = {
   },
   plugins: ["react", "@typescript-eslint"],
   rules: {
+    "new-cap": 0,
     "require-jsdoc": 0,
     "react/react-in-jsx-scope": "off",
   },
