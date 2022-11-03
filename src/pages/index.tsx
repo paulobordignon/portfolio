@@ -11,6 +11,7 @@ import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
 import { publicProvider } from "wagmi/providers/public";
 
 import { About, Alert, Footer, Header, Hero, Projects } from "@src/components";
+import { AlertProvider } from "@src/providers";
 
 const { chains, provider } = configureChains(
   [chain.goerli],
@@ -45,17 +46,16 @@ const Home: NextPage = () => {
           <title>Paulo Bordignon</title>
           <link rel="icon" href="/favicon.png" />
         </Head>
-        <Header />
-        <main className="max-w-7xl mx-auto">
-          <Hero />
-          <About />
-          <Projects />
-        </main>
-        <Footer />
-        <Alert
-          title="Only owner"
-          text="You can connect, but nothing new will be displayed"
-        />
+        <AlertProvider>
+          <Header />
+          <main className="max-w-7xl mx-auto">
+            <Hero />
+            <About />
+            <Projects />
+          </main>
+          <Footer />
+          <Alert />
+        </AlertProvider>
       </RainbowKitProvider>
     </WagmiConfig>
   );

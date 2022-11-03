@@ -1,7 +1,20 @@
+import { useState } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { Button } from "@src/components";
+import { useAlert } from "@src/hooks";
 
 export function ButtonWallet() {
+  const [firstClick, setFirstClick] = useState(true);
+  const { addError } = useAlert();
+
+  function showAlert() {
+    addError(
+      "Only owner",
+      "You can connect, but nothing new will be displayed"
+    );
+    setFirstClick(false);
+  }
+
   return (
     <ConnectButton.Custom>
       {({
@@ -35,7 +48,10 @@ export function ButtonWallet() {
             {(() => {
               if (!connected) {
                 return (
-                  <Button title="Connect Wallet" onClick={openConnectModal} />
+                  <Button
+                    title="Connect Wallet"
+                    onClick={firstClick ? () => showAlert() : openConnectModal}
+                  />
                 );
               }
               if (chain.unsupported) {
