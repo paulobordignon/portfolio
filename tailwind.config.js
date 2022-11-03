@@ -18,6 +18,7 @@ module.exports = {
       },
       fontFamily: {
         sans: ["Nunito", "sans-serif"],
+        khand: ["Khand", "sans-serif"],
       },
       screens: {
         xs: "475px",

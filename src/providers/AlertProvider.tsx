@@ -1,4 +1,4 @@
-import { createContext, useState, useCallback } from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 import { IAlertProvider, IAlertContext } from "./types";
 
 export const AlertContext = createContext({
@@ -13,6 +13,12 @@ export function AlertProvider({ children }: IAlertProvider) {
   const removeError = () => setError(null);
 
   const addError = (title, text) => setError({ title, text });
+
+  useEffect(() => {
+    setTimeout(() => {
+      removeError();
+    }, 7000);
+  }, [error]);
 
   const contextValue: IAlertContext = {
     error,

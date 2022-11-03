@@ -1,18 +1,18 @@
-import { useState } from "react";
+import { useRef } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { Button } from "@src/components";
 import { useAlert } from "@src/hooks";
 
 export function ButtonWallet() {
-  const [firstClick, setFirstClick] = useState(true);
+  const isFirstRender = useRef(true);
   const { addError } = useAlert();
 
   function showAlert() {
     addError(
       "Only owner",
-      "You can connect, but nothing new will be displayed"
+      "You can connect, but nothing new will be displayed."
     );
-    setFirstClick(false);
+    isFirstRender.current = false;
   }
 
   return (
@@ -50,7 +50,11 @@ export function ButtonWallet() {
                 return (
                   <Button
                     title="Connect Wallet"
-                    onClick={firstClick ? () => showAlert() : openConnectModal}
+                    onClick={
+                      isFirstRender.current
+                        ? () => showAlert()
+                        : openConnectModal
+                    }
                   />
                 );
               }
