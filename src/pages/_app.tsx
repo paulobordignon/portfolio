@@ -2,6 +2,7 @@ import type { AppProps } from "next/app";
 import { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import "@src/styles/main.css";
+import { RouteGuardProvider } from "@src/providers";
 
 import "@rainbow-me/rainbowkit/styles.css";
 import {
@@ -59,7 +60,9 @@ function MyApp({
               overlayBlur: "small",
             })}
           >
-            <Component {...pageProps} />
+            <RouteGuardProvider>
+              <Component {...pageProps} />
+            </RouteGuardProvider>
           </RainbowKitProvider>
         </RainbowKitSiweNextAuthProvider>
       </SessionProvider>

@@ -3,6 +3,7 @@
 
 @tailwind base;
 
+// custom scrollbar
 * {
   scrollbar-width: auto;
   scrollbar-color: rgb(163 179 188/1) rgb(13 17 23/1);

@@ -7,3 +7,6 @@ export interface IAlertContext {
   addError: (title: String, text: String) => void;
   removeError: () => void;
 }
+export interface IRouteGuardProvider {
+  children: React.ReactElement;
+}
