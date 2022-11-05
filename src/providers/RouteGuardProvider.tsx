@@ -1,20 +1,19 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
+import { useAccount } from "@src/hooks";
 import { IRouteGuardProvider } from "./types";
 
 export function RouteGuardProvider({ children }: IRouteGuardProvider) {
   const router = useRouter();
-
-  const { data: session, status }: any = useSession();
-  const isAdmin =
-    status === "authenticated" &&
-    session?.address === "0x6585d1ba166aeBF1e6A88f816e3024BF324D21ad";
+  const { isAdmin, status } = useAccount();
 
   const protectedRoutes = ["/admin"];
   const pathIsProtected = protectedRoutes.indexOf(router.pathname) !== -1;
 
   useEffect(() => {
+    if (!pathIsProtected) {
+      return;
+    }
     if (status !== "loading" && !isAdmin && pathIsProtected) {
       router.push("/");
     }
