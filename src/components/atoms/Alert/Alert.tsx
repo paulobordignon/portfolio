@@ -1,22 +1,33 @@
 import { useAlert } from "@src/hooks";
 
 export function Alert() {
-  const { error, removeError } = useAlert();
+  const { alert, variant, removeAlert } = useAlert();
 
-  return error ? (
+  const textColors = {
+    Error: "text-red-700",
+    Alert: "text-yellow-700",
+    Success: "text-green-700",
+  };
+
+  const bgColors = {
+    Error: "bg-red-200",
+    Alert: "bg-yellow-200",
+    Success: "bg-green-200",
+  };
+
+  return alert ? (
     <div className="fixed z-10 w-full bottom-7" role="alert">
-      <div className="flex max-w-7xl mx-5 xl:mx-auto p-4 mb-4 text-center bg-yellow-200 rounded-[10px] items-center">
-        <div className="ml-3 text-base font-bold text-yellow-700">
-          {error.title}{" "}
-          <span className="font-medium hover:text-yellow-800">
-            {error.text}
-          </span>
+      <div
+        className={`flex max-w-7xl mx-5 xl:mx-auto p-4 mb-4 text-center ${bgColors[variant]} rounded-[10px] items-center`}
+      >
+        <div className={`ml-3 text-base font-bold ${textColors[variant]}`}>
+          {alert.title} <span className="font-medium">{alert.text}</span>
         </div>
         <button
           type="button"
-          className="ml-auto -mx-1.5 -my-1.5 bg-yellow-200 text-yellow-500 rounded-lg focus:ring-2 focus:ring-yellow-400 p-1.5 hover:bg-yellow-300 inline-flex h-8 w-8"
+          className={`ml-auto -mx-1.5 -my-1.5 ${bgColors[variant]} ${textColors[variant]} rounded-lg focus:ring-2 p-1.5 inline-flex h-8 w-8`}
           aria-label="Close"
-          onClick={() => removeError()}
+          onClick={() => removeAlert()}
         >
           <span className="sr-only">Dismiss</span>
           <svg

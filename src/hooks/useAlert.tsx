@@ -2,7 +2,8 @@ import { useContext } from "react";
 import { AlertContext } from "@src/providers";
 
 export function useAlert() {
-  const { error, addError, removeError } = useContext(AlertContext);
+  const { alert, variant, addVariant, addAlert, removeAlert } =
+    useContext(AlertContext);
 
-  return { error, addError, removeError };
+  return { alert, variant, addVariant, addAlert, removeAlert };
 }

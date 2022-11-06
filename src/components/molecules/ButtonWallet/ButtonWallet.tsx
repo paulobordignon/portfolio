@@ -5,10 +5,10 @@ import { useAlert } from "@src/hooks";
 
 export function ButtonWallet() {
   const isFirstRender = useRef(true);
-  const { addError } = useAlert();
+  const { addAlert } = useAlert();
 
   function showAlert() {
-    addError(
+    addAlert(
       "Only owner",
       "You can connect, but nothing new will be displayed."
     );

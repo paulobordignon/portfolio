@@ -2,28 +2,39 @@ import { createContext, useCallback, useEffect, useState } from "react";
 import { IAlertProvider, IAlertContext } from "./types";
 
 export const AlertContext = createContext({
-  error: null,
-  addError: (title, text) => {},
-  removeError: () => {},
+  alert: null,
+  variant: "Alert",
+  addVariant: (variant) => {},
+  addAlert: (title, text) => {},
+  removeAlert: () => {},
 });
 
 export function AlertProvider({ children }: IAlertProvider) {
-  const [error, setError] = useState(null);
+  const [alert, setAlert] = useState(null);
+  const [variant, setVariant] = useState<"Success" | "Alert" | "Error">(
+    "Alert"
+  );
 
-  const removeError = () => setError(null);
+  const removeAlert = () => {
+    setAlert(null);
+    setVariant("Alert");
+  };
 
-  const addError = (title, text) => setError({ title, text });
+  const addAlert = (title, text) => setAlert({ title, text });
+  const addVariant = (variant) => setVariant(variant);
 
   useEffect(() => {
     setTimeout(() => {
-      removeError();
+      removeAlert();
     }, 7000);
-  }, [error]);
+  }, [alert]);
 
   const contextValue: IAlertContext = {
-    error,
-    addError: useCallback((title, text) => addError(title, text), []),
-    removeError: useCallback(() => removeError(), []),
+    alert,
+    variant,
+    addVariant: useCallback((variant) => addVariant(variant), []),
+    addAlert: useCallback((title, text) => addAlert(title, text), []),
+    removeAlert: useCallback(() => removeAlert(), []),
   };
 
   return (

@@ -3,9 +3,11 @@ export interface IAlertProvider {
 }
 
 export interface IAlertContext {
-  error: any;
-  addError: (title: String, text: String) => void;
-  removeError: () => void;
+  alert: string;
+  variant: "Success" | "Alert" | "Error";
+  addVariant: (variant) => void;
+  addAlert: (title: String, text: String) => void;
+  removeAlert: () => void;
 }
 export interface IRouteGuardProvider {
   children: React.ReactElement;

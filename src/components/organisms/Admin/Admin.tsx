@@ -15,7 +15,7 @@ export function Admin() {
   const contractAddress = process.env.NEXT_PUBLIC_CONTRACTADDRESS;
   const contractABI = abi.abi;
   const { ethereum } = window;
-  const { addError } = useAlert();
+  const { addAlert, addVariant } = useAlert();
 
   const fields = [
     { label: "Title", placeholder: "Project title" },
@@ -28,6 +28,11 @@ export function Admin() {
     },
     { label: "Website", placeholder: "paulobordignon.com" },
   ];
+
+  function showAlert(title, text) {
+    addAlert(title, text);
+    addVariant(title);
+  }
 
   const addProject = async () => {
     try {
@@ -58,12 +63,12 @@ export function Admin() {
         iptKeywords.current.value = "";
         iptGitHub.current.value = "";
         iptWebsite.current.value = "";
-        addError("Success", `Project has been added ${projectTxn.hash}`);
+        showAlert("Success", `Project has been added ${projectTxn.hash}`);
       } else {
-        addError("Error", "Authentication problem");
+        showAlert("Error", "Authentication problem");
       }
     } catch (error) {
-      addError("Error", error.message);
+      showAlert("Error", error.message);
     } finally {
       setLoading(false);
     }
