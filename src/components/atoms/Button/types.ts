@@ -1,5 +1,5 @@
-export interface IButton {
+export interface IButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   title: string;
   onClick?: () => any;
-  type?: "normal" | "error";
+  variant?: "normal" | "error";
 }

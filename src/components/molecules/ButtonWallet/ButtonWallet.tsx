@@ -63,7 +63,7 @@ export function ButtonWallet() {
                   <Button
                     title="Wrong Network"
                     onClick={openChainModal}
-                    type="error"
+                    variant="error"
                   />
                 );
               }
