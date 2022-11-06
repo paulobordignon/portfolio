@@ -5,7 +5,7 @@ export function Alert() {
 
   return error ? (
     <div className="fixed z-10 w-full bottom-7" role="alert">
-      <div className="flex max-w-7xl mx-auto p-4 mb-4 text-center bg-yellow-200 rounded-[10px] items-center">
+      <div className="flex max-w-7xl mx-5 xl:mx-auto p-4 mb-4 text-center bg-yellow-200 rounded-[10px] items-center">
         <div className="ml-3 text-base font-bold text-yellow-700">
           {error.title}{" "}
           <span className="font-medium hover:text-yellow-800">
