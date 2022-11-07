@@ -7,7 +7,7 @@ export function Button({ title, onClick, variant, ...props }: IButton) {
       onClick={onClick}
       {...props}
       className={`
-        py-2 px-4 text-base xs:py-3 font-medium xs:text-lg text-primaryText
+        py-2 px-4 text-base xs:py-2.5 font-medium xs:text-lg text-primaryText
         border-2 rounded-[10px] outline-none xs:w-auto w-full
         ${variant === "error" ? "border-error" : "border-primary"}
         ${

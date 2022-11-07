@@ -1,4 +1,4 @@
-import { createRef, useState } from "react";
+import { createRef, useEffect, useState } from "react";
 import { ethers } from "ethers";
 import abi from "@src/artifacts/contracts/Projects.json";
 import { Button, Input } from "@src/components";
@@ -6,6 +6,7 @@ import { useAlert } from "@src/hooks";
 
 export function Admin() {
   const [loading, setLoading] = useState(false);
+  const [allProjects, setAllProjects] = useState([]);
   const iptImage = createRef<HTMLInputElement>();
   const iptTitle = createRef<HTMLInputElement>();
   const iptAbout = createRef<HTMLInputElement>();
@@ -38,7 +39,6 @@ export function Admin() {
     try {
       if (ethereum) {
         setLoading(true);
-
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
         const ProjectsContract = new ethers.Contract(
@@ -48,21 +48,17 @@ export function Admin() {
         );
 
         const projectTxn = await ProjectsContract.addProject(
-          iptImage.current?.value,
-          iptTitle.current?.value,
-          iptAbout.current?.value,
-          JSON.parse(iptKeywords.current?.value),
-          iptGitHub.current?.value,
-          iptWebsite.current?.value
+          iptImage.current.value,
+          iptTitle.current.value,
+          iptAbout.current.value,
+          JSON.parse(iptKeywords.current.value),
+          iptGitHub.current.value,
+          iptWebsite.current.value
         );
 
         await projectTxn.wait();
-        iptImage.current.value = "";
-        iptTitle.current.value = "";
-        iptAbout.current.value = "";
-        iptKeywords.current.value = "";
-        iptGitHub.current.value = "";
-        iptWebsite.current.value = "";
+
+        getAllProjects();
         showAlert("Success", `Project has been added ${projectTxn.hash}`);
       } else {
         showAlert("Error", "Authentication problem");
@@ -74,9 +70,69 @@ export function Admin() {
     }
   };
 
+  const getAllProjects = async () => {
+    try {
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        const ProjectsContract = new ethers.Contract(
+          contractAddress,
+          contractABI,
+          signer
+        );
+        const listProjects = await ProjectsContract.getAllProjects();
+
+        const projectsCleaned = listProjects.map((project) => {
+          return {
+            image: project.image,
+            title: project.title,
+            about: project.about,
+            keywords: project.keywords,
+            github: project.github,
+            website: project.website,
+          };
+        });
+
+        setAllProjects(projectsCleaned);
+      } else {
+        showAlert("Error", "Authentication problem");
+      }
+    } catch (error) {
+      showAlert("Error", error.message);
+    }
+  };
+
+  const removeProject = async (index) => {
+    try {
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        const ProjectsContract = new ethers.Contract(
+          contractAddress,
+          contractABI,
+          signer
+        );
+        const removeProjectTxn = await ProjectsContract.removeProject(index);
+
+        await removeProjectTxn.wait();
+
+        getAllProjects();
+        showAlert("Success", "The project has been removed");
+      } else {
+        showAlert("Error", "Authentication problem");
+      }
+    } catch (error) {
+      showAlert("Error", error.message);
+    }
+  };
+
+  useEffect(() => {
+    getAllProjects();
+  }, []);
+
   return (
-    <section className="min-h-[100vh] px-5 pt-[10vh] text-primaryText ">
-      <form className="flex gap-5 flex-wrap">
+    <section className="min-h-[100vh] px-5 pt-[15vh] text-primaryText">
+      <form className="flex gap-5 flex-wrap border border-cardHover p-5 rounded-[10px]">
         {fields.map((item) => {
           return (
             <div
@@ -91,8 +147,33 @@ export function Admin() {
             </div>
           );
         })}
-        <Button title="Add" onClick={() => addProject()} disabled={loading} />
+        <Button
+          title="Add Project"
+          onClick={() => addProject()}
+          disabled={loading}
+        />
       </form>
+
+      {allProjects && (
+        <div className="mt-8 border border-cardHover p-5 rounded-[10px]">
+          <p className="text-lg">All Projects</p>
+          <ul className="mt-5">
+            {allProjects.map((project, i) => {
+              return (
+                <li key={project.title} className="mt-1">
+                  {i} - {project.title}
+                  <button
+                    className="ml-5 border-2 rounded-[10px] p-1 text-sm border-error text-error hover:border-errorHover hover:text-errorHover"
+                    onClick={() => removeProject(i)}
+                  >
+                    Remove
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      )}
     </section>
   );
 }
