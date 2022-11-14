@@ -1,6 +1,7 @@
 export * from "./atoms/Alert";
 export * from "./atoms/Button";
 export * from "./atoms/Input";
+export * from "./atoms/Spinner";
 export * from "./atoms/Tag";
 export * from "./molecules/ButtonWallet";
 export * from "./molecules/Card";

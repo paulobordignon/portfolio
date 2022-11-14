@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import { Spinner } from "@src/components";
 import { useAccount } from "@src/hooks";
 import { IRouteGuardProvider } from "./types";
 
@@ -20,11 +21,7 @@ export function RouteGuardProvider({ children }: IRouteGuardProvider) {
   }, [status, isAdmin, pathIsProtected, router]);
 
   if ((status === "loading" || !isAdmin) && pathIsProtected) {
-    return (
-      <div className="h-screen w-screen flex items-center justify-center">
-        <div className="w-10 h-10 border-4 border-t-primaryHover border-primary border-double rounded-full animate-spin" />
-      </div>
-    );
+    return <Spinner height="h-screen" />;
   }
 
   return children;
