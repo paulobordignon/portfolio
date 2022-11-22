@@ -21,7 +21,7 @@ export function RouteGuardProvider({ children }: IRouteGuardProvider) {
   }, [status, isAdmin, pathIsProtected, router]);
 
   if ((status === "loading" || !isAdmin) && pathIsProtected) {
-    return <Spinner height="h-screen" />;
+    return <Spinner height="h-screen" width="w-screen" />;
   }
 
   return children;
