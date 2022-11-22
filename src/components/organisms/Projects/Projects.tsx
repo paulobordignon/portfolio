@@ -1,10 +1,49 @@
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Card } from "@src/components";
+import { ethers } from "ethers";
+import abi from "@src/artifacts/contracts/Projects.json";
+import { Card, Spinner } from "@src/components";
 import { useAccount } from "@src/hooks";
 
 export function Projects() {
-  const test = [1, 2, 3, 4];
   const { isAdmin } = useAccount();
+  const [loading, setLoading] = useState(true);
+  const [allProjects, setAllProjects] = useState([]);
+  const contractAddress = process.env.NEXT_PUBLIC_CONTRACTADDRESS;
+  const contractABI = abi.abi;
+
+  const getAllProjects = async () => {
+    try {
+      const provider = ethers.getDefaultProvider("goerli");
+      const ProjectsContract = new ethers.Contract(
+        contractAddress,
+        contractABI,
+        provider
+      );
+      const listProjects = await ProjectsContract.getAllProjects();
+
+      const projectsCleaned = listProjects.map((project) => {
+        return {
+          image: project.image,
+          title: project.title,
+          about: project.about,
+          keywords: project.keywords,
+          github: project.github,
+          website: project.website,
+        };
+      });
+
+      setAllProjects(projectsCleaned);
+    } catch (error) {
+      console.error("err", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getAllProjects();
+  }, []);
 
   return (
     <section className="flex flex-col gap-5 md:ml-10 px-5 pt-64 xs:px-10">
@@ -28,11 +67,15 @@ export function Projects() {
         </a>{" "}
         to see the contract.
       </p>
-      <ul className="flex gap-y-12 flex-wrap">
-        {test.map((i) => (
-          <Card key={i} sequence={i} />
-        ))}
-      </ul>
+      {loading ? (
+        <Spinner height="h-20" width="max-w-7xl" />
+      ) : (
+        <ul className="flex gap-y-12 flex-wrap">
+          {allProjects.map((project, index) => (
+            <Card key={index} sequence={index} project={project} />
+          ))}
+        </ul>
+      )}
     </section>
   );
 }

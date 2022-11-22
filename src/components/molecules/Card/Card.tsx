@@ -6,7 +6,7 @@ import { FaRegShareSquare } from "react-icons/fa";
 import { Tag } from "@src/components";
 import { ICard } from "./types";
 
-export function Card({ sequence }: ICard) {
+export function Card({ sequence, project }: ICard) {
   const observer = useRef<any>();
   const animation = useAnimation();
 
@@ -47,8 +47,8 @@ export function Card({ sequence }: ICard) {
       >
         <Image
           className="rounded-[10px]"
-          src="https://github.com/paulobordignon/faucet-example/raw/master/public/project.png"
-          alt="personal photography"
+          src={`https://cloudflare-ipfs.com/ipfs/${project.image}`}
+          alt="project image"
           height={600}
           width={900}
         />
@@ -56,38 +56,35 @@ export function Card({ sequence }: ICard) {
       <div className="text-lg mx-5 lg:basis-3/5">
         <div className="flex justify-between">
           <p className="text-primaryText mt-5 text-xl font-medium">
-            Project 1 {sequence}
+            {project.title}
           </p>
           <div className="flex gap-5 text-secondaryText mt-5">
-            <a
-              href="https://github.com/paulobordignon"
-              target={"_blank"}
-              rel="noopener noreferrer"
-            >
-              <FaRegShareSquare className="hover:text-primaryHover" />
-            </a>
-            <a
-              href="https://github.com/paulobordignon"
-              target={"_blank"}
-              rel="noopener noreferrer"
-            >
-              <BsGithub className="hover:text-primaryHover" />
-            </a>
+            {project.website && (
+              <a
+                href={project.website}
+                target={"_blank"}
+                rel="noopener noreferrer"
+              >
+                <FaRegShareSquare className="hover:text-primaryHover" />
+              </a>
+            )}
+            {project.github && (
+              <a
+                href={project.github}
+                target={"_blank"}
+                rel="noopener noreferrer"
+              >
+                <BsGithub className="hover:text-primaryHover" />
+              </a>
+            )}
           </div>
         </div>
 
-        <p className="text-secondaryText mt-3 text-justify">
-          Created a new project Created a new project Created a new project
-          Created a new project Created a new project Created a new project
-          Created a new project Created a new project Created a new project
-        </p>
+        <p className="text-secondaryText mt-3 text-justify">{project.about}</p>
         <div className="text-secondaryText mt-5 flex gap-2 flex-wrap mb-5">
-          <Tag text="React" />
-          <Tag text="Tailwind" />
-          <Tag text="React Native" />
-          <Tag text="Styled Components" />
-          <Tag text="React" />
-          <Tag text="React" />
+          {Array.from(project.keywords).map((keyword, index) => (
+            <Tag key={index} text={keyword} />
+          ))}
         </div>
       </div>
     </motion.li>

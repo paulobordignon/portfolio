@@ -7,7 +7,7 @@ import Logo from "../../../../public/logo.png";
 
 export function Header() {
   return (
-    <header className={`h-[10vh] fixed w-full bg-backgroundHeader z-10`}>
+    <header className={`fixed w-full bg-backgroundHeader z-10`}>
       <nav className="max-w-7xl flex justify-between items-start mx-auto p-5 text-primary">
         <div>
           <Link href={"/"}>
