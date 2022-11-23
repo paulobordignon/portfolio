@@ -47,14 +47,14 @@ export function Projects() {
 
   return (
     <section className="flex flex-col gap-5 md:ml-10 px-5 pt-64 xs:px-10">
-      <p className="text-2xl text-primaryText font-semibold">
+      <h3 className="text-2xl text-primaryText font-semibold">
         I have built{" "}
         {isAdmin && (
           <Link href={"/admin"}>
             <a className="ml-4 text-primary text-lg">Add new project</a>
           </Link>
         )}
-      </p>
+      </h3>
       <p className="text-lg text-secondaryText mb-10 font-semibold text-justify">
         The list below is public on the Ethereum blockchain{" "}
         <a
@@ -63,9 +63,9 @@ export function Projects() {
           target={"_blank"}
           rel="noopener noreferrer"
         >
-          click here
-        </a>{" "}
-        to see the contract.
+          in this smart contract
+        </a>
+        .
       </p>
       {loading ? (
         <Spinner height="h-20" width="max-w-7xl" />

@@ -36,7 +36,7 @@ export function About() {
       className="flex flex-col gap-5 md:ml-10 px-5 pt-32 xs:px-10"
     >
       <div ref={aboutRef}>
-        <p className="text-2xl text-primaryText mb-10 font-semibold">About</p>
+        <h3 className="text-2xl text-primaryText mb-10 font-semibold">About</h3>
         <div className="flex flex-col lg:flex-row gap-10 lg:gap-20">
           <div className="text-lg text-secondaryText text-justify basis-4/5">
             <p>Hi, I&apos;m Paulo Bordignon a Full Stack developer from 🇧🇷.</p>

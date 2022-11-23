@@ -10,6 +10,16 @@ const Home: NextPage = () => {
       <Head>
         <title>Paulo Bordignon</title>
         <link rel="icon" href="/favicon.png" />
+        <meta
+          name="description"
+          content="Paulo Bordignon's Portfolio. A Full Stack Developer from Brazil."
+          key="desc"
+        />
+        <meta property="og:title" content="Paulo Bordignon" />
+        <meta
+          property="og:description"
+          content="Paulo Bordignon's Portfolio. A Full Stack Developer from Brazil."
+        />
       </Head>
       <AlertProvider>
         <Header />
