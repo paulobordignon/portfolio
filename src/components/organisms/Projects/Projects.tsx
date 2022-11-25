@@ -14,7 +14,10 @@ export function Projects() {
 
   const getAllProjects = async () => {
     try {
-      const provider = ethers.getDefaultProvider("goerli");
+      const provider = new ethers.providers.AlchemyProvider(
+        "goerli",
+        process.env.NEXT_PUBLIC_GOERLI_PROVIDER
+      );
       const ProjectsContract = new ethers.Contract(
         contractAddress,
         contractABI,

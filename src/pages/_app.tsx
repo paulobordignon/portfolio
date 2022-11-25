@@ -16,11 +16,17 @@ import {
 } from "@rainbow-me/rainbowkit-siwe-next-auth";
 
 import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
+import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 
 const { chains, provider } = configureChains(
   [chain.goerli],
-  [publicProvider()]
+  [
+    alchemyProvider({
+      apiKey: process.env.NEXT_PUBLIC_GOERLI_PROVIDER,
+    }),
+    publicProvider(),
+  ]
 );
 
 const { connectors } = getDefaultWallets({
