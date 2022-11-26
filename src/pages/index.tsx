@@ -1,10 +1,47 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import { ethers } from "ethers";
 
+import abi from "@src/artifacts/contracts/Projects.json";
 import { About, Alert, Footer, Header, Hero, Projects } from "@src/components";
 import { AlertProvider } from "@src/providers";
+import { IProject } from "@src/components/organisms/Projects/types";
 
-const Home: NextPage = () => {
+export async function getStaticProps() {
+  const contractAddress = process.env.NEXT_PUBLIC_CONTRACTADDRESS;
+  const contractABI = abi.abi;
+
+  const provider = new ethers.providers.AlchemyProvider(
+    "goerli",
+    process.env.NEXT_PUBLIC_GOERLI_PROVIDER
+  );
+  const ProjectsContract = new ethers.Contract(
+    contractAddress,
+    contractABI,
+    provider
+  );
+  const listProjects = await ProjectsContract.getAllProjects();
+
+  const projectsCleaned = listProjects.map((project) => {
+    return {
+      image: project.image,
+      title: project.title,
+      about: project.about,
+      keywords: project.keywords,
+      github: project.github,
+      website: project.website,
+    };
+  });
+
+  return {
+    props: {
+      projects: projectsCleaned,
+    },
+    revalidate: 86400,
+  };
+}
+
+const Home: NextPage = ({ projects }: { projects: IProject[] }) => {
   return (
     <>
       <Head>
@@ -26,7 +63,7 @@ const Home: NextPage = () => {
         <main className="max-w-7xl mx-auto">
           <Hero />
           <About />
-          <Projects />
+          <Projects projects={projects} />
         </main>
         <Footer />
         <Alert />

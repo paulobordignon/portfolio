@@ -1,11 +1,4 @@
-interface IProject {
-  image: string;
-  title: string;
-  about: string;
-  keywords: string;
-  github?: string;
-  website?: string;
-}
+import { IProject } from "@src/components/organisms/Projects/types";
 
 export interface ICard {
   sequence: number;
