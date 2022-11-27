@@ -1,34 +1,50 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<p align="center">
+  <img alt="paulobordignon-logo" alt="Paulo Bordignon Logo" src="public/logo.png" width="15" height="15"/>
+  <span style="margin-left: 10px">Paulo Bordignon's Portfolio</span>
+</p>
 
-## Getting Started
+The purpose of this project is to create a personal website to introduce myself and show my projects to all people.
 
-First, run the development server:
+<strong> Architecture and decisions </strong>
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+The main objective was to create a portfolio using a different backend to manage the projects' list. I chose the Ethereum blockchain that offers us a decentralized, free, and transparent solution with data always available.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The smart contract was built using Hardhat, Jest, and Alchemy. It has functions to add projects, remove projects, and list projects. Inside of smart contract, there is an array of projects that allow us to manipulate the data, and also only the owner can manipulate the data (contract deployer). The images of projects also are decentralized hosting using IPFS.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+In the front-end is used atomic design methodology is for creating the components, this improves a vision of how the interface and elements are connected.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+Using React's Context API was built a global notification (inside each page) to always display the alert messages in the same place and always have only one alert displayed each time [[1]](#1).
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Because of an admin page to manage the smart contract, it was used a route guard provider to redirect the user to the home page (without flashing content) if it isn't an admin user [[2]](#2). Admin user is verified through his wallet address.
 
-## Learn More
+For users to connect their wallet was used Rainbowkit a modern and open-source project. To always have the smart contract content and wallet connect available was used a private provider through Alchemy.
 
-To learn more about Next.js, take a look at the following resources:
+The private provider has costs because of this was implemented the ISR data fetching method to get the content only one time per day indifferent of quantity access. The ISR also optimizes the SEO of the website displaying all content in the first render.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+<strong> Technologies </strong>
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Next.js, Typescript, Hardhat, Ethers, Alchemy, Rainbowkit, Jest, Pinata, Ethereum, Framer Motion, IPFS, and others.
 
-## Deploy on Vercel
+<strong> Requirements </strong>
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1 - Run: `yarn`;
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+2 - Deploy the smart contract using Hardhat and Alchemy;
+
+3 - Fill out environment variables;
+
+4 - Run: `yarn dev`.
+
+<strong> Next features </strong>
+
+Create also a decentralized domain and use the most possible decentralized resources, like fleek to host the website and others.
+
+<strong> References </strong>
+
+<a id="1">[1]</a>
+de Carvalho, D. M. (2020).
+[Handling global notifications with React's Context API.](https://sericaia.me/blog/2020-01-13/handling-global-notifications-with-react-s-context-api)
+
+<a id="2">[2]</a>
+Clarence, T. (2021).
+[Next.js Redirect Without Flashing Content.](https://theodorusclarence.com/blog/nextjs-redirect-no-flashing)
