@@ -20,7 +20,7 @@ export function Projects({ projects }: { projects: IProject[] }) {
         The list below is public on the Ethereum blockchain{" "}
         <a
           className="text-primary"
-          href="https://goerli.etherscan.io/address/0xC7B134E751293DC1905feD846eB68294a2A68f18"
+          href="https://goerli.etherscan.io/address/0xF37c5dFe3c7700F25EAaAdcD1debB5308a0F350e"
           target={"_blank"}
           rel="noopener noreferrer"
         >
