@@ -11,7 +11,7 @@ The purpose of this project is to create a personal website to introduce myself 
 
 The main objective was to create a portfolio using a different backend to manage the projects' list. I chose the Ethereum blockchain that offers us a decentralized, free, and transparent solution with data always available.
 
-The [smart contract](https://goerli.etherscan.io/address/0xF37c5dFe3c7700F25EAaAdcD1debB5308a0F350e) was built using Hardhat, Jest, and Alchemy. It has functions to add projects, remove projects, and list projects. Inside of smart contract, there is an array of projects that allow us to manipulate the data, and also only the owner can manipulate the data (contract deployer). The images of projects also are decentralized hosting using IPFS.
+The [smart contract](https://goerli.etherscan.io/address/0xF37c5dFe3c7700F25EAaAdcD1debB5308a0F350e) was built using Hardhat, Mocha, and Alchemy. It has functions to add projects, remove projects, and list projects. Inside of smart contract, there is an array of projects that allow us to manipulate the data, and also only the owner can manipulate the data (contract deployer). The images of projects also are decentralized hosting using IPFS.
 
 In the front-end is used atomic design methodology is for creating the components, this improves a vision of how the interface and elements are connected.
 
@@ -27,7 +27,7 @@ The private provider has costs because of this was implemented the [ISR](https:/
 
 <strong> Technologies </strong>
 
-Next.js, Typescript, Solidity, Hardhat, Ethers, Alchemy, Rainbowkit, Jest, Pinata, Ethereum, Framer Motion, IPFS, and others.
+Next.js, Typescript, Solidity, Hardhat, Ethers, Alchemy, Rainbowkit, Mocha, Pinata, Ethereum, Framer Motion, IPFS, and others.
 
 <br />
 
