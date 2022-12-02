@@ -19,7 +19,7 @@ export function Projects({ projects }: { projects: IProject[] }) {
       <p className="text-lg text-secondaryText mb-10 font-semibold text-justify">
         The list below is public on the Ethereum blockchain{" "}
         <a
-          className="text-primary"
+          className="text-primary underline"
           href="https://goerli.etherscan.io/address/0xF37c5dFe3c7700F25EAaAdcD1debB5308a0F350e"
           target={"_blank"}
           rel="noopener noreferrer"
@@ -33,6 +33,14 @@ export function Projects({ projects }: { projects: IProject[] }) {
           <Card key={index} sequence={index} project={project} />
         ))}
       </ul>
+      <a
+        className="font-semibold text-primary text-lg text-center mt-5 md:mr-10 underline"
+        href={"https://github.com/paulobordignon?tab=repositories"}
+        target={"_blank"}
+        rel="noopener noreferrer"
+      >
+        See more projects
+      </a>
     </section>
   );
 }
