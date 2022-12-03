@@ -27,13 +27,15 @@ export function Admin() {
       label: "GitHub",
       placeholder: "https://github.com/paulobordignon/portfolio",
     },
-    { label: "Website", placeholder: "paulobordignon.com" },
+    { label: "Website", placeholder: "https://www.paulobordignon.com/" },
   ];
 
   function showAlert(title, text) {
     addAlert(title, text);
     addVariant(title);
   }
+
+  console.log("1", process.env.NEXT_PUBLIC_CONTRACTADDRESS);
 
   const addProject = async () => {
     try {
@@ -47,6 +49,14 @@ export function Admin() {
           signer
         );
 
+        console.log(
+          "3",
+          provider,
+          signer,
+          ProjectsContract,
+          iptTitle.current.value
+        );
+
         const projectTxn = await ProjectsContract.addProject(
           iptImage.current.value,
           iptTitle.current.value,
@@ -57,6 +67,8 @@ export function Admin() {
         );
 
         await projectTxn.wait();
+
+        console.log("4", projectTxn, iptTitle.current.value);
 
         getAllProjects();
         showAlert("Success", `Project has been added ${projectTxn.hash}`);
@@ -71,8 +83,10 @@ export function Admin() {
   };
 
   const getAllProjects = async () => {
+    console.log("22", ethereum);
     try {
       if (ethereum) {
+        console.log("222", ethereum);
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
         const ProjectsContract = new ethers.Contract(
@@ -80,6 +94,8 @@ export function Admin() {
           contractABI,
           signer
         );
+
+        console.log("33", provider, signer, ProjectsContract);
         const listProjects = await ProjectsContract.getAllProjects();
 
         const projectsCleaned = listProjects.map((project) => {
