@@ -19,15 +19,18 @@ export function getAuthOptions(req: IncomingMessage): NextAuthOptions {
 
           const nextAuthUrl = process.env.NEXTAUTH_URL;
           if (!nextAuthUrl) {
+            console.log("1");
             return null;
           }
 
           const nextAuthHost = new URL(nextAuthUrl).host;
           if (siwe.domain !== nextAuthHost) {
+            console.log("2", siwe.domain);
             return null;
           }
 
           if (siwe.nonce !== (await getCsrfToken({ req }))) {
+            console.log("3", siwe.nonce);
             return null;
           }
 
@@ -36,6 +39,7 @@ export function getAuthOptions(req: IncomingMessage): NextAuthOptions {
             id: siwe.address,
           };
         } catch (e) {
+          console.log("4", e);
           return null;
         }
       },

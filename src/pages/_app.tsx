@@ -1,4 +1,5 @@
 import type { AppProps } from "next/app";
+import Script from "next/script";
 import { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import "@src/styles/main.css";
@@ -67,7 +68,22 @@ function MyApp({
             })}
           >
             <RouteGuardProvider>
-              <Component {...pageProps} />
+              <>
+                <Script
+                  strategy="afterInteractive"
+                  src="https://www.googletagmanager.com/gtag/js?id=G-ZLEY94TQE0"
+                />
+                <Script id="google-analytics" strategy="afterInteractive">
+                  {`
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    gtag('js', new Date());
+          
+                    gtag('config', 'G-ZLEY94TQE0');
+                  `}
+                </Script>
+                <Component {...pageProps} />
+              </>
             </RouteGuardProvider>
           </RainbowKitProvider>
         </RainbowKitSiweNextAuthProvider>
