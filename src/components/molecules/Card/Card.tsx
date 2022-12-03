@@ -61,6 +61,7 @@ export function Card({ sequence, project }: ICard) {
           <div className="flex gap-5 text-secondaryText mt-5">
             {project.website && (
               <a
+                aria-label="open website"
                 href={project.website}
                 target={"_blank"}
                 rel="noopener noreferrer"
@@ -70,6 +71,7 @@ export function Card({ sequence, project }: ICard) {
             )}
             {project.github && (
               <a
+                aria-label="open github"
                 href={project.github}
                 target={"_blank"}
                 rel="noopener noreferrer"

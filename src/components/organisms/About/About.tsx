@@ -66,7 +66,7 @@ export function About() {
           </div>
           <div className="self-center">
             <Image
-              className="rounded-[10px] scale-95 hover:scale-100 hover:duration-700 grayscale-[70%] hover:grayscale-0"
+              className="rounded-[10px] hover:duration-700 grayscale-[70%] hover:grayscale-0"
               src="https://github.com/paulobordignon.png"
               alt="personal photography"
               height={300}

@@ -22,6 +22,7 @@ export function Header() {
         </div>
         <div className="flex gap-5 text-xl items-center justify-center">
           <a
+            aria-label="open linkedin"
             href="https://www.linkedin.com/in/paulobordignon/"
             target={"_blank"}
             rel="noopener noreferrer"
@@ -29,6 +30,7 @@ export function Header() {
             <BsLinkedin className="hover:text-primaryHover" />
           </a>
           <a
+            aria-label="open github"
             href="https://github.com/paulobordignon"
             target={"_blank"}
             rel="noopener noreferrer"
@@ -36,6 +38,7 @@ export function Header() {
             <BsGithub className="hover:text-primaryHover" />
           </a>
           <a
+            aria-label="send email"
             className="text-2xl"
             href="mailto:phbordignon@outlook.com"
             target={"_blank"}
