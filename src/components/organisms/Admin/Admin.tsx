@@ -18,7 +18,12 @@ export function Admin() {
   const contractAddress = process.env.NEXT_PUBLIC_CONTRACTADDRESS;
   const contractABI = abi.abi;
   const localProvider = new ethers.providers.Web3Provider(window.ethereum);
-  const contract = new ethers.Contract(
+  const listContract = new ethers.Contract(
+    contractAddress,
+    contractABI,
+    localProvider
+  );
+  const crudContract = new ethers.Contract(
     contractAddress,
     contractABI,
     localProvider.getSigner()
@@ -45,7 +50,7 @@ export function Admin() {
     try {
       setLoading(true);
 
-      const projectTxn = await contract.addProject(
+      const projectTxn = await crudContract.addProject(
         iptImage.current.value,
         iptTitle.current.value,
         iptAbout.current.value,
@@ -56,7 +61,7 @@ export function Admin() {
 
       await projectTxn.wait();
 
-      getAllProjects();
+      listAllProjects();
       showAlert("Success", `Project has been added ${projectTxn.hash}`);
     } catch (error) {
       showAlert("Error", error.message);
@@ -65,9 +70,9 @@ export function Admin() {
     }
   };
 
-  const getAllProjects = async () => {
+  const listAllProjects = async () => {
     try {
-      const listProjects = await contract.getAllProjects();
+      const listProjects = await listContract.getAllProjects();
 
       const projectsCleaned = listProjects.map((project) => {
         return {
@@ -88,11 +93,11 @@ export function Admin() {
 
   const removeProject = async (index) => {
     try {
-      const removeProjectTxn = await contract.removeProject(index);
+      const removeProjectTxn = await crudContract.removeProject(index);
 
       await removeProjectTxn.wait();
 
-      getAllProjects();
+      listAllProjects();
       showAlert("Success", "The project has been removed");
     } catch (error) {
       showAlert("Error", error.message);
@@ -100,7 +105,8 @@ export function Admin() {
   };
 
   useEffect(() => {
-    getAllProjects();
+    console.log("localProvider", localProvider, listContract);
+    listAllProjects();
   }, []);
 
   return (
