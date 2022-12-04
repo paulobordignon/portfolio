@@ -10,7 +10,6 @@ import { IProject } from "@src/components/organisms/Projects/types";
 export async function getStaticProps() {
   const contractAddress = process.env.NEXT_PUBLIC_CONTRACTADDRESS;
   const contractABI = abi.abi;
-
   const provider = new ethers.providers.AlchemyProvider(
     "goerli",
     process.env.NEXT_PUBLIC_GOERLI_PROVIDER
@@ -20,6 +19,7 @@ export async function getStaticProps() {
     contractABI,
     provider
   );
+
   const listProjects = await ProjectsContract.getAllProjects();
 
   const projectsCleaned = listProjects.map((project) => {
@@ -49,7 +49,7 @@ const Home: NextPage = ({ projects }: { projects: IProject[] }) => {
         <link rel="icon" href="/favicon.png" />
         <link
           rel="canonical"
-          href="https://paulobordignon.com"
+          href="https://paulobordignon.com/"
           key="canonical"
         />
         <meta

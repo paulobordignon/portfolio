@@ -5,6 +5,7 @@ import { Button, Input } from "@src/components";
 import { useAlert } from "@src/hooks";
 
 export function Admin() {
+  const { addAlert, addVariant } = useAlert();
   const [loading, setLoading] = useState(false);
   const [allProjects, setAllProjects] = useState([]);
   const iptImage = createRef<HTMLInputElement>();
@@ -13,10 +14,15 @@ export function Admin() {
   const iptKeywords = createRef<HTMLInputElement>();
   const iptGitHub = createRef<HTMLInputElement>();
   const iptWebsite = createRef<HTMLInputElement>();
+
   const contractAddress = process.env.NEXT_PUBLIC_CONTRACTADDRESS;
   const contractABI = abi.abi;
-  const { ethereum } = window;
-  const { addAlert, addVariant } = useAlert();
+  const localProvider = new ethers.providers.Web3Provider(window.ethereum);
+  const contract = new ethers.Contract(
+    contractAddress,
+    contractABI,
+    localProvider.getSigner()
+  );
 
   const fields = [
     { label: "Title", placeholder: "Project title" },
@@ -35,46 +41,23 @@ export function Admin() {
     addVariant(title);
   }
 
-  console.log("1", process.env.NEXT_PUBLIC_CONTRACTADDRESS);
-
   const addProject = async () => {
     try {
-      if (ethereum) {
-        setLoading(true);
-        const provider = new ethers.providers.Web3Provider(ethereum);
-        const signer = provider.getSigner();
-        const ProjectsContract = new ethers.Contract(
-          contractAddress,
-          contractABI,
-          signer
-        );
+      setLoading(true);
 
-        console.log(
-          "3",
-          provider,
-          signer,
-          ProjectsContract,
-          iptTitle.current.value
-        );
+      const projectTxn = await contract.addProject(
+        iptImage.current.value,
+        iptTitle.current.value,
+        iptAbout.current.value,
+        JSON.parse(iptKeywords.current.value),
+        iptGitHub.current.value,
+        iptWebsite.current.value
+      );
 
-        const projectTxn = await ProjectsContract.addProject(
-          iptImage.current.value,
-          iptTitle.current.value,
-          iptAbout.current.value,
-          JSON.parse(iptKeywords.current.value),
-          iptGitHub.current.value,
-          iptWebsite.current.value
-        );
+      await projectTxn.wait();
 
-        await projectTxn.wait();
-
-        console.log("4", projectTxn, iptTitle.current.value);
-
-        getAllProjects();
-        showAlert("Success", `Project has been added ${projectTxn.hash}`);
-      } else {
-        showAlert("Error", "Authentication problem");
-      }
+      getAllProjects();
+      showAlert("Success", `Project has been added ${projectTxn.hash}`);
     } catch (error) {
       showAlert("Error", error.message);
     } finally {
@@ -83,36 +66,21 @@ export function Admin() {
   };
 
   const getAllProjects = async () => {
-    console.log("22", ethereum);
     try {
-      if (ethereum) {
-        console.log("222", ethereum);
-        const provider = new ethers.providers.Web3Provider(ethereum);
-        const signer = provider.getSigner();
-        const ProjectsContract = new ethers.Contract(
-          contractAddress,
-          contractABI,
-          signer
-        );
+      const listProjects = await contract.getAllProjects();
 
-        console.log("33", provider, signer, ProjectsContract);
-        const listProjects = await ProjectsContract.getAllProjects();
+      const projectsCleaned = listProjects.map((project) => {
+        return {
+          image: project.image,
+          title: project.title,
+          about: project.about,
+          keywords: project.keywords,
+          github: project.github,
+          website: project.website,
+        };
+      });
 
-        const projectsCleaned = listProjects.map((project) => {
-          return {
-            image: project.image,
-            title: project.title,
-            about: project.about,
-            keywords: project.keywords,
-            github: project.github,
-            website: project.website,
-          };
-        });
-
-        setAllProjects(projectsCleaned);
-      } else {
-        showAlert("Error", "Authentication problem");
-      }
+      setAllProjects(projectsCleaned);
     } catch (error) {
       showAlert("Error", error.message);
     }
@@ -120,23 +88,12 @@ export function Admin() {
 
   const removeProject = async (index) => {
     try {
-      if (ethereum) {
-        const provider = new ethers.providers.Web3Provider(ethereum);
-        const signer = provider.getSigner();
-        const ProjectsContract = new ethers.Contract(
-          contractAddress,
-          contractABI,
-          signer
-        );
-        const removeProjectTxn = await ProjectsContract.removeProject(index);
+      const removeProjectTxn = await contract.removeProject(index);
 
-        await removeProjectTxn.wait();
+      await removeProjectTxn.wait();
 
-        getAllProjects();
-        showAlert("Success", "The project has been removed");
-      } else {
-        showAlert("Error", "Authentication problem");
-      }
+      getAllProjects();
+      showAlert("Success", "The project has been removed");
     } catch (error) {
       showAlert("Error", error.message);
     }
