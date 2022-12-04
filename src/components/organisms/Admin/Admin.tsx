@@ -18,10 +18,14 @@ export function Admin() {
   const contractAddress = process.env.NEXT_PUBLIC_CONTRACTADDRESS;
   const contractABI = abi.abi;
   const localProvider = new ethers.providers.Web3Provider(window.ethereum);
+  const alchemyProvider = new ethers.providers.AlchemyProvider(
+    "goerli",
+    process.env.NEXT_PUBLIC_GOERLI_PROVIDER
+  );
   const listContract = new ethers.Contract(
     contractAddress,
     contractABI,
-    localProvider
+    alchemyProvider
   );
   const crudContract = new ethers.Contract(
     contractAddress,
