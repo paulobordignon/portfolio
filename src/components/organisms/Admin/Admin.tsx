@@ -6,14 +6,14 @@ import { useAlert } from "@src/hooks";
 
 export function Admin() {
   const { addAlert, addVariant } = useAlert();
-  const [loading, setLoading] = useState(false);
+  /* const [loading, setLoading] = useState(false); */
   const [allProjects, setAllProjects] = useState([]);
-  const iptImage = createRef<HTMLInputElement>();
+  /* const iptImage = createRef<HTMLInputElement>();
   const iptTitle = createRef<HTMLInputElement>();
   const iptAbout = createRef<HTMLInputElement>();
   const iptKeywords = createRef<HTMLInputElement>();
   const iptGitHub = createRef<HTMLInputElement>();
-  const iptWebsite = createRef<HTMLInputElement>();
+  const iptWebsite = createRef<HTMLInputElement>(); */
 
   const contractAddress = process.env.NEXT_PUBLIC_CONTRACTADDRESS;
   const contractABI = abi.abi;
@@ -27,11 +27,11 @@ export function Admin() {
     contractABI,
     alchemyProvider
   );
-  const crudContract = new ethers.Contract(
+  /* const crudContract = new ethers.Contract(
     contractAddress,
     contractABI,
     localProvider.getSigner()
-  );
+  ); */
 
   const fields = [
     { label: "Title", placeholder: "Project title" },
@@ -50,7 +50,7 @@ export function Admin() {
     addVariant(title);
   }
 
-  const addProject = async () => {
+  /* const addProject = async () => {
     try {
       setLoading(true);
 
@@ -72,9 +72,10 @@ export function Admin() {
     } finally {
       setLoading(false);
     }
-  };
+  }; */
 
   const listAllProjects = async () => {
+    console.log("1");
     try {
       const listProjects = await listContract.getAllProjects();
 
@@ -95,7 +96,7 @@ export function Admin() {
     }
   };
 
-  const removeProject = async (index) => {
+  /* const removeProject = async (index) => {
     try {
       const removeProjectTxn = await crudContract.removeProject(index);
 
@@ -106,7 +107,7 @@ export function Admin() {
     } catch (error) {
       showAlert("Error", error.message);
     }
-  };
+  }; */
 
   useEffect(() => {
     console.log("localProvider", localProvider, listContract);
@@ -122,19 +123,19 @@ export function Admin() {
               className="basis-full sm:basis-[calc(50%-1.25rem)] w-max"
               key={item.label}
             >
-              <Input
+              {/* <Input
                 label={item.label}
                 placeholder={item.placeholder}
                 ref={eval(`ipt${item.label}`)}
-              />
+              /> */}
             </div>
           );
         })}
-        <Button
+        {/* <Button
           title="Add Project"
           onClick={() => addProject()}
           disabled={loading}
-        />
+        /> */}
       </form>
 
       {allProjects && (
@@ -145,12 +146,12 @@ export function Admin() {
               return (
                 <li key={project.title} className="mt-1">
                   {i} - {project.title}
-                  <button
+                  {/*  <button
                     className="ml-5 border-2 rounded-[10px] p-1 text-sm border-error text-error hover:border-errorHover hover:text-errorHover"
                     onClick={() => removeProject(i)}
                   >
                     Remove
-                  </button>
+                  </button> */}
                 </li>
               );
             })}
