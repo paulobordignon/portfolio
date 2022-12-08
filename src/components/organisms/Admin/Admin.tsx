@@ -1,4 +1,4 @@
-import { createRef, useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { ethers } from "ethers";
 import abi from "@src/artifacts/contracts/Projects.json";
 import { Button, Input } from "@src/components";
@@ -8,12 +8,12 @@ export function Admin() {
   const { addAlert, addVariant } = useAlert();
   const [loading, setLoading] = useState(false);
   const [allProjects, setAllProjects] = useState([]);
-  const iptImage = createRef<HTMLInputElement>();
-  const iptTitle = createRef<HTMLInputElement>();
-  const iptAbout = createRef<HTMLInputElement>();
-  const iptKeywords = createRef<HTMLInputElement>();
-  const iptGitHub = createRef<HTMLInputElement>();
-  const iptWebsite = createRef<HTMLInputElement>();
+  const iptTitle = useRef<HTMLInputElement>();
+  const iptAbout = useRef<HTMLInputElement>();
+  const iptImage = useRef<HTMLInputElement>();
+  const iptKeywords = useRef<HTMLInputElement>();
+  const iptGitHub = useRef<HTMLInputElement>();
+  const iptWebsite = useRef<HTMLInputElement>();
 
   const contractAddress = process.env.NEXT_PUBLIC_CONTRACTADDRESS;
   const contractABI = abi.abi;
@@ -23,18 +23,6 @@ export function Admin() {
     contractABI,
     localProvider.getSigner()
   );
-
-  const fields = [
-    { label: "Title", placeholder: "Project title" },
-    { label: "About", placeholder: "About the project" },
-    { label: "Image", placeholder: "QmZk64ZpHdLrMkcK..." },
-    { label: "Keywords", placeholder: "['Solidity', 'React']" },
-    {
-      label: "GitHub",
-      placeholder: "https://github.com/paulobordignon/portfolio",
-    },
-    { label: "Website", placeholder: "https://www.paulobordignon.com/" },
-  ];
 
   function showAlert(title, text) {
     addAlert(title, text);
@@ -67,6 +55,21 @@ export function Admin() {
     }
   };
 
+  const removeProject = async (index) => {
+    try {
+      if (index) {
+        const removeProjectTxn = await contract.removeProject(index);
+
+        await removeProjectTxn.wait();
+
+        listAllProjects();
+        showAlert("Success", "The project has been removed");
+      }
+    } catch (error) {
+      showAlert("Error", error.message);
+    }
+  };
+
   const listAllProjects = async () => {
     try {
       const listProjects = await contract.getAllProjects();
@@ -88,21 +91,6 @@ export function Admin() {
     }
   };
 
-  const removeProject = async (index) => {
-    try {
-      if (index) {
-        const removeProjectTxn = await contract.removeProject(index);
-
-        await removeProjectTxn.wait();
-
-        listAllProjects();
-        showAlert("Success", "The project has been removed");
-      }
-    } catch (error) {
-      showAlert("Error", error.message);
-    }
-  };
-
   useEffect(() => {
     listAllProjects();
   }, []);
@@ -110,20 +98,24 @@ export function Admin() {
   return (
     <section className="min-h-[100vh] px-5 pt-[15vh] text-primaryText">
       <form className="flex gap-5 flex-wrap border border-cardHover p-5 rounded-[10px]">
-        {fields.map((item) => {
-          return (
-            <div
-              className="basis-full sm:basis-[calc(50%-1.25rem)] w-max"
-              key={item.label}
-            >
-              <Input
-                label={item.label}
-                placeholder={item.placeholder}
-                ref={eval(`ipt${item.label}`)}
-              />
-            </div>
-          );
-        })}
+        <Input label="Title" placeholder="Project title" ref={iptTitle} />
+        <Input label="About" placeholder="About the project" ref={iptAbout} />
+        <Input label="Image" placeholder="QmZk64ZpHdLrMkcK..." ref={iptImage} />
+        <Input
+          label="Keywords"
+          placeholder="['Solidity', 'React']"
+          ref={iptKeywords}
+        />
+        <Input
+          label="GitHub"
+          placeholder="https://github.com/paulobordignon/portfolio"
+          ref={iptGitHub}
+        />
+        <Input
+          label="Website"
+          placeholder="https://www.paulobordignon.com/"
+          ref={iptWebsite}
+        />
         <Button
           title="Add Project"
           onClick={() => addProject()}

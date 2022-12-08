@@ -6,7 +6,7 @@ export const Input = forwardRef<HTMLInputElement, IInput>(function Input(
   ref
 ) {
   return (
-    <>
+    <div className="basis-full sm:basis-[calc(50%-1.25rem)] w-max" key={label}>
       <label className="block mb-2 text-primaryText">{label}</label>
       <input
         type="text"
@@ -15,6 +15,6 @@ export const Input = forwardRef<HTMLInputElement, IInput>(function Input(
         ref={ref}
         required
       />
-    </>
+    </div>
   );
 });
