@@ -16,7 +16,7 @@ export function Projects({ projects }: { projects: IProject[] }) {
           </Link>
         )}
       </h3>
-      <p className="text-lg text-secondaryText mb-10 font-semibold text-justify">
+      <p className="text-lg text-secondaryText mb-10 text-justify">
         The list below is public on the Ethereum blockchain{" "}
         <a
           className="text-primary underline"
