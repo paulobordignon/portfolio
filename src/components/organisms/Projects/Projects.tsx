@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FiExternalLink } from "react-icons/fi";
 import { Card } from "@src/components";
 import { useAccount } from "@src/hooks";
 import { IProject } from "./types";
@@ -19,12 +20,13 @@ export function Projects({ projects }: { projects: IProject[] }) {
       <p className="text-lg text-secondaryText mb-10 text-justify">
         The list below is public on the Ethereum blockchain{" "}
         <a
-          className="text-primary underline"
+          className="text-primary"
           href={`https://goerli.etherscan.io/address/${process.env.NEXT_PUBLIC_CONTRACTADDRESS}`}
           target={"_blank"}
           rel="noopener noreferrer"
         >
-          in this smart contract
+          in this smart contract{" "}
+          <FiExternalLink className="hover:text-primaryHover inline align-baseline" />
         </a>
         .
       </p>
@@ -34,12 +36,13 @@ export function Projects({ projects }: { projects: IProject[] }) {
         ))}
       </ul>
       <a
-        className="font-semibold text-primary text-lg text-center mt-5 md:mr-10 underline"
+        className="font-semibold text-primary text-lg text-center mt-5 md:mr-10"
         href={"https://github.com/paulobordignon?tab=repositories"}
         target={"_blank"}
         rel="noopener noreferrer"
       >
-        See more projects
+        See more projects{" "}
+        <FiExternalLink className="hover:text-primaryHover inline align-baseline" />
       </a>
     </section>
   );

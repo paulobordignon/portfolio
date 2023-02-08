@@ -27,7 +27,7 @@ export function Header() {
             target={"_blank"}
             rel="noopener noreferrer"
           >
-            <BsLinkedin className="hover:text-primaryHover" />
+            <BsLinkedin className="hover:text-primaryHover inline" />
           </a>
           <a
             aria-label="open github"
@@ -35,7 +35,7 @@ export function Header() {
             target={"_blank"}
             rel="noopener noreferrer"
           >
-            <BsGithub className="hover:text-primaryHover" />
+            <BsGithub className="hover:text-primaryHover inline" />
           </a>
           <a
             aria-label="send email"
@@ -44,7 +44,7 @@ export function Header() {
             target={"_blank"}
             rel="noopener noreferrer"
           >
-            <MdEmail className="hover:text-primaryHover" />
+            <MdEmail className="hover:text-primaryHover inline" />
           </a>
         </div>
       </nav>
