@@ -3,7 +3,6 @@ import Script from "next/script";
 import { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import "@src/styles/main.css";
-import { RouteGuardProvider } from "@src/providers";
 
 import "@rainbow-me/rainbowkit/styles.css";
 import {
@@ -67,24 +66,22 @@ function MyApp({
               overlayBlur: "small",
             })}
           >
-            <RouteGuardProvider>
-              <>
-                <Script
-                  strategy="afterInteractive"
-                  src="https://www.googletagmanager.com/gtag/js?id=G-ZLEY94TQE0"
-                />
-                <Script id="google-analytics" strategy="afterInteractive">
-                  {`
+            <>
+              <Script
+                strategy="afterInteractive"
+                src="https://www.googletagmanager.com/gtag/js?id=G-ZLEY94TQE0"
+              />
+              <Script id="google-analytics" strategy="afterInteractive">
+                {`
                     window.dataLayer = window.dataLayer || [];
                     function gtag(){dataLayer.push(arguments);}
                     gtag('js', new Date());
           
                     gtag('config', 'G-ZLEY94TQE0');
                   `}
-                </Script>
-                <Component {...pageProps} />
-              </>
-            </RouteGuardProvider>
+              </Script>
+              <Component {...pageProps} />
+            </>
           </RainbowKitProvider>
         </RainbowKitSiweNextAuthProvider>
       </SessionProvider>

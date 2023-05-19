@@ -9,6 +9,3 @@ export interface IAlertContext {
   addAlert: (title: String, text: String) => void;
   removeAlert: () => void;
 }
-export interface IRouteGuardProvider {
-  children: React.ReactElement;
-}

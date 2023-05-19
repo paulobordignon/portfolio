@@ -14,15 +14,10 @@ export function Admin() {
   const iptKeywords = useRef<HTMLInputElement>();
   const iptGitHub = useRef<HTMLInputElement>();
   const iptWebsite = useRef<HTMLInputElement>();
-
+  const localProvider = useRef<any>();
+  const contract = useRef<any>();
   const contractAddress = process.env.NEXT_PUBLIC_CONTRACTADDRESS;
   const contractABI = abi.abi;
-  const localProvider = new ethers.providers.Web3Provider(window.ethereum);
-  const contract = new ethers.Contract(
-    contractAddress,
-    contractABI,
-    localProvider.getSigner()
-  );
 
   function showAlert(title, text) {
     addAlert(title, text);
@@ -34,7 +29,7 @@ export function Admin() {
       if (iptTitle.current.value) {
         setLoading(true);
 
-        const projectTxn = await contract.addProject(
+        const projectTxn = await contract.current.addProject(
           iptImage.current.value,
           iptTitle.current.value,
           iptAbout.current.value,
@@ -58,7 +53,7 @@ export function Admin() {
   const removeProject = async (index) => {
     try {
       if (index) {
-        const removeProjectTxn = await contract.removeProject(index);
+        const removeProjectTxn = await contract.current.removeProject(index);
 
         await removeProjectTxn.wait();
 
@@ -72,7 +67,7 @@ export function Admin() {
 
   const listAllProjects = async () => {
     try {
-      const listProjects = await contract.getAllProjects();
+      const listProjects = await contract.current.getAllProjects();
 
       const projectsCleaned = listProjects.map((project) => {
         return {
@@ -92,6 +87,12 @@ export function Admin() {
   };
 
   useEffect(() => {
+    localProvider.current = new ethers.providers.Web3Provider(window.ethereum);
+    contract.current = new ethers.Contract(
+      contractAddress,
+      contractABI,
+      localProvider.current.getSigner()
+    );
     listAllProjects();
   }, []);
 

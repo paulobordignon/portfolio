@@ -17,7 +17,7 @@ In the front-end is used atomic design methodology is for creating the component
 
 Using React's Context API was built a global notification (inside each page) to always display the alert messages in the same place and always have only one alert displayed each time [[1]](#1).
 
-Because of an admin page to manage the smart contract, it was used a route guard provider to redirect the user to the home page (without flashing content) if it isn't an admin user [[2]](#2). Admin user is verified through his wallet address.
+Because the admin page manages the smart contract, it was used the Next.js middleware to redirect the user to the home page (without flashing content) if he isn't an admin user [[2]](#2). The admin user is verified through his wallet address.
 
 For users to connect their wallet was used [Rainbowkit](https://www.rainbowkit.com/docs/introduction) a modern and open-source project. To always have the smart contract content and wallet connect available was used a private provider through Alchemy.
 
@@ -57,4 +57,4 @@ de Carvalho, D. M. (2020).
 
 <a id="2">[2]</a>
 Clarence, T. (2021).
-[Next.js Redirect Without Flashing Content.](https://theodorusclarence.com/blog/nextjs-redirect-no-flashing)
+[Next.js Middleware.](https://nextjs.org/docs/pages/building-your-application/routing/middleware)
