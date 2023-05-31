@@ -3,7 +3,7 @@ import Head from "next/head";
 import { ethers } from "ethers";
 
 import abi from "@src/artifacts/contracts/Projects.json";
-import { About, Alert, Footer, Header, Hero, Projects } from "@src/components";
+import { About, Alert, Hero, Projects } from "@src/components";
 import { AlertProvider } from "@src/providers";
 import { IProject } from "@src/components/organisms/Projects/types";
 
@@ -70,13 +70,11 @@ const Home: NextPage = ({ projects }: { projects: IProject[] }) => {
         <meta property="og:type" content="website" />
       </Head>
       <AlertProvider>
-        <Header />
         <main className="max-w-7xl mx-auto">
           <Hero />
           <About />
           <Projects projects={projects} />
         </main>
-        <Footer />
         <Alert />
       </AlertProvider>
     </>

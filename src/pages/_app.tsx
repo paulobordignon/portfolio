@@ -2,7 +2,6 @@ import type { AppProps } from "next/app";
 import Script from "next/script";
 import { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
-import "@src/styles/main.css";
 
 import "@rainbow-me/rainbowkit/styles.css";
 import {
@@ -18,6 +17,9 @@ import {
 import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
+
+import { Layout } from "@src/components";
+import "@src/styles/main.css";
 
 const { chains, provider } = configureChains(
   [chain.goerli],
@@ -80,7 +82,9 @@ function MyApp({
                     gtag('config', 'G-ZLEY94TQE0');
                   `}
               </Script>
-              <Component {...pageProps} />
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
             </>
           </RainbowKitProvider>
         </RainbowKitSiweNextAuthProvider>
