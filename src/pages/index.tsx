@@ -10,7 +10,7 @@ import { IProject } from "@src/components/organisms/Projects/types";
 export async function getStaticProps() {
   const contractAddress = process.env.NEXT_PUBLIC_CONTRACTADDRESS;
   const contractABI = abi.abi;
-  const provider = new ethers.providers.AlchemyProvider(
+  const provider = new ethers.AlchemyProvider(
     "goerli",
     process.env.NEXT_PUBLIC_GOERLI_PROVIDER
   );

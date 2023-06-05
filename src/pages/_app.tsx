@@ -14,15 +14,17 @@ import {
   RainbowKitSiweNextAuthProvider,
 } from "@rainbow-me/rainbowkit-siwe-next-auth";
 
-import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
+import { configureChains, createConfig, WagmiConfig } from "wagmi";
+import { goerli } from "wagmi/chains";
+import { createPublicClient, http } from "viem";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
 
 import { Layout } from "@src/components";
 import "@src/styles/main.css";
 
-const { chains, provider } = configureChains(
-  [chain.goerli],
+const { chains } = configureChains(
+  [goerli],
   [
     alchemyProvider({
       apiKey: process.env.NEXT_PUBLIC_GOERLI_PROVIDER,
@@ -36,10 +38,13 @@ const { connectors } = getDefaultWallets({
   chains,
 });
 
-const wagmiClient = createClient({
+const config = createConfig({
   autoConnect: true,
   connectors,
-  provider,
+  publicClient: createPublicClient({
+    chain: goerli,
+    transport: http(),
+  }),
 });
 
 const getSiweMessageOptions: GetSiweMessageOptions = () => ({
@@ -53,7 +58,7 @@ function MyApp({
   session: Session;
 }>) {
   return (
-    <WagmiConfig client={wagmiClient}>
+    <WagmiConfig config={config}>
       <SessionProvider refetchInterval={0} session={pageProps.session}>
         <RainbowKitSiweNextAuthProvider
           getSiweMessageOptions={getSiweMessageOptions}

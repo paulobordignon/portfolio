@@ -86,14 +86,20 @@ export function Admin() {
     }
   };
 
-  useEffect(() => {
-    localProvider.current = new ethers.providers.Web3Provider(window.ethereum);
+  async function getProvider() {
+    // @ts-ignore
+    localProvider.current = new ethers.BrowserProvider(window.ethereum);
     contract.current = new ethers.Contract(
       contractAddress,
       contractABI,
-      localProvider.current.getSigner()
+      await localProvider.current.getSigner(0)
     );
+
     listAllProjects();
+  }
+
+  useEffect(() => {
+    getProvider();
   }, []);
 
   return (

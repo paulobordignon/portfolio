@@ -12,8 +12,8 @@ export function Projects({ projects }: { projects: IProject[] }) {
       <h3 className="text-2xl text-primaryText font-semibold">
         I have built{" "}
         {isAdmin && (
-          <Link href={"/admin"}>
-            <a className="ml-4 text-primary text-lg">Add new project</a>
+          <Link className="ml-4 text-primary text-lg" href={"/admin"}>
+            Add new project
           </Link>
         )}
       </h3>

@@ -1,97 +1,73 @@
-// Code in this file is based on https://docs.login.xyz/integrations/nextauth.js
-// and https://github.com/ChangoMan/nextjs-ethereum-starter/
-
-import { IncomingMessage } from "http";
-import { NextApiRequest, NextApiResponse } from "next";
-import NextAuth, { NextAuthOptions } from "next-auth";
+import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { getCsrfToken } from "next-auth/react";
 import { SiweMessage } from "siwe";
 
-export function getAuthOptions(req: IncomingMessage): NextAuthOptions {
+// For more information on each option (and a full list of options) go to
+// https://next-auth.js.org/configuration/options
+export default async function auth(req: any, res: any) {
   const providers = [
     CredentialsProvider({
+      name: "Ethereum",
+      credentials: {
+        message: {
+          label: "Message",
+          type: "text",
+          placeholder: "0x0",
+        },
+        signature: {
+          label: "Signature",
+          type: "text",
+          placeholder: "0x0",
+        },
+      },
       async authorize(credentials) {
         try {
           const siwe = new SiweMessage(
             JSON.parse(credentials?.message || "{}")
           );
+          const nextAuthUrl = new URL(process.env.NEXTAUTH_URL);
 
-          const nextAuthUrl = process.env.NEXTAUTH_URL;
-          if (!nextAuthUrl) {
-            return null;
+          const result = await siwe.verify({
+            signature: credentials?.signature || "",
+            domain: nextAuthUrl.host,
+            nonce: await getCsrfToken({ req }),
+          });
+
+          if (result.success) {
+            return {
+              id: siwe.address,
+            };
           }
-
-          const nextAuthHost = new URL(nextAuthUrl).host;
-          if (siwe.domain !== nextAuthHost) {
-            return null;
-          }
-
-          if (siwe.nonce !== (await getCsrfToken({ req }))) {
-            return null;
-          }
-
-          await siwe.validate(credentials?.signature || "");
-          return {
-            id: siwe.address,
-          };
+          return null;
         } catch (e) {
           return null;
         }
       },
-      credentials: {
-        message: {
-          label: "Message",
-          placeholder: "0x0",
-          type: "text",
-        },
-        signature: {
-          label: "Signature",
-          placeholder: "0x0",
-          type: "text",
-        },
-      },
-      name: "Ethereum",
     }),
   ];
 
-  return {
-    callbacks: {
-      async session({ session, token }: any) {
-        session.address = token.sub;
-        session.user = {
-          name: token.sub,
-        };
-        return session;
-      },
-    },
-    // https://next-auth.js.org/configuration/providers/oauth
-    providers,
-    secret: process.env.NEXTAUTH_SECRET,
-    session: {
-      strategy: "jwt",
-    },
-  };
-}
-
-// For more information on each option (and a full list of options) go to
-// https://next-auth.js.org/configuration/options
-export default async function auth(req: NextApiRequest, res: NextApiResponse) {
-  const authOptions = getAuthOptions(req);
-
-  if (!Array.isArray(req.query.nextauth)) {
-    res.status(400).send("Bad request");
-    return;
-  }
-
   const isDefaultSigninPage =
-    req.method === "GET" &&
-    req.query.nextauth.find((value) => value === "signin");
+    req.method === "GET" && req.query.nextauth.includes("signin");
 
   // Hide Sign-In with Ethereum from default sign page
   if (isDefaultSigninPage) {
-    authOptions.providers.pop();
+    providers.pop();
   }
 
-  return await NextAuth(req, res, authOptions);
+  return await NextAuth(req, res, {
+    // https://next-auth.js.org/configuration/providers/oauth
+    providers,
+    session: {
+      strategy: "jwt",
+    },
+    secret: process.env.NEXTAUTH_SECRET,
+    callbacks: {
+      async session({ session, token }: { session: any; token: any }) {
+        session.address = token.sub;
+        session.user.name = token.sub;
+        return session;
+      },
+    },
+  });
 }
