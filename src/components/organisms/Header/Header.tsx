@@ -17,6 +17,7 @@ export function Header() {
               alt="logo"
               height={25}
               width={25}
+              priority={true}
             />
           </Link>
         </div>

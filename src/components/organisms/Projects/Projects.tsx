@@ -8,7 +8,7 @@ export function Projects({ projects }: { projects: IProject[] }) {
   const { isAdmin } = useAccount();
 
   return (
-    <section className="flex flex-col gap-5 md:ml-10 px-5 pt-64 xs:px-10">
+    <section className="flex flex-col gap-5 mb-40 md:ml-10 px-5 pt-64 xs:px-10">
       <h3 className="text-2xl text-primaryText font-semibold">
         I have built{" "}
         {isAdmin && (
