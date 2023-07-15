@@ -14,7 +14,7 @@ export function Admin() {
   const iptKeywords = useRef<HTMLInputElement>();
   const iptGitHub = useRef<HTMLInputElement>();
   const iptWebsite = useRef<HTMLInputElement>();
-  const localProvider = useRef<any>();
+  const alchemyProvider = useRef<any>();
   const contract = useRef<any>();
   const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS;
   const contractABI = abi.abi;
@@ -88,11 +88,14 @@ export function Admin() {
 
   async function getProvider() {
     // @ts-ignore
-    localProvider.current = new ethers.BrowserProvider(window.ethereum);
+    alchemyProvider.current = new ethers.AlchemyProvider(
+      "goerli",
+      process.env.NEXT_PUBLIC_NETWORK_PROVIDER
+    );
     contract.current = new ethers.Contract(
       contractAddress,
       contractABI,
-      await localProvider.current.getSigner(0)
+      await alchemyProvider.current
     );
 
     listAllProjects();
