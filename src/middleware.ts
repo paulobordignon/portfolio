@@ -13,7 +13,7 @@ export default async function middleware(req: NextRequest) {
     secret: process.env.NEXTAUTH_SECRET,
   });
 
-  const isAdmin = session?.sub === "0x6585d1ba166aeBF1e6A88f816e3024BF324D21ad";
+  const isAdmin = session?.sub === process.env.NEXT_PUBLIC_ADMIN_ADDRESS;
 
   if ((!session?.sub || !isAdmin) && path.indexOf("/admin") > -1) {
     return NextResponse.redirect(new URL("/", req.url));

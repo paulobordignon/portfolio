@@ -4,7 +4,7 @@ export function useAccount() {
   const { data: session, status }: any = useSession();
   const isAdmin =
     status === "authenticated" &&
-    session?.address === "0x6585d1ba166aeBF1e6A88f816e3024BF324D21ad";
+    session?.address === process.env.NEXT_PUBLIC_ADMIN_ADDRESS;
 
   return { session, status, isAdmin };
 }

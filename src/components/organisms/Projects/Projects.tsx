@@ -21,7 +21,7 @@ export function Projects({ projects }: { projects: IProject[] }) {
         The list below is public on the Ethereum blockchain{" "}
         <a
           className="text-primary"
-          href={`https://goerli.etherscan.io/address/${process.env.NEXT_PUBLIC_CONTRACTADDRESS}`}
+          href={`https://goerli.etherscan.io/address/${process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}`}
           target={"_blank"}
           rel="noopener noreferrer"
         >

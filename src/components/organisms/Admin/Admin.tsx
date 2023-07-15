@@ -16,7 +16,7 @@ export function Admin() {
   const iptWebsite = useRef<HTMLInputElement>();
   const localProvider = useRef<any>();
   const contract = useRef<any>();
-  const contractAddress = process.env.NEXT_PUBLIC_CONTRACTADDRESS;
+  const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS;
   const contractABI = abi.abi;
 
   function showAlert(title, text) {

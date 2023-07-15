@@ -24,7 +24,7 @@ export function Card({ sequence, project }: ICard) {
           });
         } else {
           animation.start({
-            x: sequence % 2 ? 0 : -50,
+            x: sequence % 2 ? +20 : -50,
             opacity: 0,
           });
         }

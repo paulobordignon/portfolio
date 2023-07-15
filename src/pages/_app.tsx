@@ -27,7 +27,7 @@ const { chains } = configureChains(
   [goerli],
   [
     alchemyProvider({
-      apiKey: process.env.NEXT_PUBLIC_GOERLI_PROVIDER,
+      apiKey: process.env.NEXT_PUBLIC_NETWORK_PROVIDER,
     }),
     publicProvider(),
   ]
@@ -35,6 +35,7 @@ const { chains } = configureChains(
 
 const { connectors } = getDefaultWallets({
   appName: "Paulo Bordignon's Portfolio",
+  projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_ID,
   chains,
 });
 
