@@ -1,13 +1,11 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.9;
-
 import "hardhat/console.sol";
 
 contract Projects {
 
   struct Project {
-    uint id;
-    address owner;
+    uint8 id;
     string image;
     string title;
     string about;
@@ -17,9 +15,7 @@ contract Projects {
   }
 
   Project[] myProjects;
-
-  uint private projectId;
-
+  uint8 private projectId;
   address payable private ownerAddress;
 
   constructor ()  {
@@ -29,7 +25,7 @@ contract Projects {
   error OnlyOwner();
 
   modifier onlyOwner {
-    if (payable(msg.sender) != ownerAddress) {
+    if (msg.sender != ownerAddress) {
       revert OnlyOwner();
     }
     _;
@@ -51,11 +47,10 @@ contract Projects {
     string memory _website
   ) external onlyOwner {
 
-    uint _id = projectId++;
+    uint8 _id = projectId++;
 
     myProjects.push(Project(
       _id,
-      msg.sender,
       _image,
       _title,
       _about,
@@ -66,17 +61,17 @@ contract Projects {
   }
 
   function removeProject(
-    uint _index
+    uint8 _index
   ) external onlyOwner {
     // In Solidity when you delete an element from an array, the array length is the same as before.
     // To avoid it, we move the element to the last position and then remove it
-    for(uint i = _index; i < myProjects.length-1; i++){
+    for(uint8 i = _index; i < myProjects.length-1; i++){
       myProjects[i] = myProjects[i+1];      
     }
     myProjects.pop();
   }
 
-  function getAllProjects() public view returns (Project[] memory) {
+  function getAllProjects() external view returns (Project[] memory) {
     return myProjects;
   }
 }
