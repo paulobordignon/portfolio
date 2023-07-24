@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   useContractRead,
   useContractWrite,
@@ -15,8 +15,8 @@ import abi from "@src/artifacts/contracts/Projects.json";
 export function Admin() {
   const { addAlert, addVariant } = useAlert();
   const [allProjects, setAllProjects] = useState([]);
-  const removeId = useRef<Number>();
-  const createNew = useRef<Boolean>(false);
+  const [removeId, setRemoveId] = useState<Number>();
+  const [createNew, setCreateNew] = useState<Boolean>(false);
   const iptTitle = useRef<HTMLInputElement>();
   const iptAbout = useRef<HTMLInputElement>();
   const iptImage = useRef<HTMLInputElement>();
@@ -26,12 +26,11 @@ export function Admin() {
   const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS;
 
   const { data: walletClient } = useWalletClient();
-  useContractRead({
+  const { refetch: refetchProjects } = useContractRead({
     address: contractAddress,
     abi: abi.abi,
     functionName: "getAllProjects",
     walletClient: walletClient,
-    watch: true,
     onSuccess(data) {
       setAllProjects(data);
     },
@@ -40,25 +39,25 @@ export function Admin() {
     },
   });
 
-  const { config: configAdd, refetch: refetchAdd } = usePrepareContractWrite({
-    address: contractAddress,
-    abi: abi.abi,
-    functionName: "addProject",
-    from: walletClient?.account?.address,
-    args: [
-      iptImage.current?.value,
-      iptTitle.current?.value,
-      iptAbout.current?.value,
-      JSON.parse(iptKeywords.current?.value || JSON.stringify([])),
-      iptGitHub.current?.value,
-      iptWebsite.current?.value,
-    ],
-  });
   const {
     data: dataAdd,
     write: writeAdd,
     isLoading: loadingAdd,
-  } = useContractWrite(configAdd);
+  } = useContractWrite({
+    address: contractAddress,
+    abi: abi.abi,
+    functionName: "addProject",
+    from: walletClient?.account?.address,
+    enabled: false,
+    args: [
+      iptImage.current?.value,
+      iptTitle.current?.value,
+      iptAbout.current?.value,
+      iptKeywords.current?.value ? JSON.parse(iptKeywords.current?.value) : [],
+      iptGitHub.current?.value,
+      iptWebsite.current?.value,
+    ],
+  });
 
   const { config: configRemove, refetch: refetchRemove } =
     usePrepareContractWrite({
@@ -66,7 +65,8 @@ export function Admin() {
       abi: abi.abi,
       functionName: "removeProject",
       from: walletClient?.account?.address,
-      args: [removeId.current || 0],
+      enabled: false,
+      args: [removeId || 0],
     });
   const {
     data: dataRemove,
@@ -79,23 +79,28 @@ export function Admin() {
   });
 
   useEffect(() => {
-    if (removeId.current > -1) {
-      refetchRemove?.();
-      writeRemove?.();
-      removeId.current = undefined;
+    if (createNew) {
+      writeAdd?.();
     }
-  }, [removeId.current]);
+  }, [createNew]);
+
+  async function removeProject() {
+    await refetchRemove?.();
+    writeRemove?.();
+  }
 
   useEffect(() => {
-    if (createNew.current) {
-      refetchAdd?.();
-      writeAdd?.();
-      createNew.current = false;
+    if (removeId > -1) {
+      removeProject();
     }
-  }, [createNew.current]);
+  }, [removeId]);
 
   useEffect(() => {
     if (isSuccess || isError) {
+      setRemoveId(undefined);
+      setCreateNew(false);
+      refetchProjects?.();
+
       showAlert(
         isSuccess ? "Success" : "Error",
         isSuccess
@@ -133,11 +138,11 @@ export function Admin() {
         />
         <Button
           title="Add Project"
-          onClick={async () => {
-            if (iptTitle.current?.value && iptKeywords.current?.value) {
-              createNew.current = true;
+          onClick={() => {
+            if (iptTitle.current?.value) {
+              setCreateNew(true);
             } else {
-              showAlert("Error", "Title and Keywords are required");
+              showAlert("Error", "Title is required");
             }
           }}
           disabled={isLoading || loadingAdd || loadingRemove}
@@ -157,7 +162,7 @@ export function Admin() {
                     text-error hover:border-errorHover hover:text-errorHover
                     disabled:border-cardHover disabled:text-cardHover"
                     onClick={() => {
-                      removeId.current = i;
+                      setRemoveId(i);
                     }}
                     disabled={isLoading || loadingAdd || loadingRemove}
                   >
