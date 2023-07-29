@@ -15,21 +15,19 @@ import {
 } from "@rainbow-me/rainbowkit-siwe-next-auth";
 
 import { configureChains, createConfig, WagmiConfig } from "wagmi";
-import { goerli } from "wagmi/chains";
-import { createPublicClient, http } from "viem";
-import { alchemyProvider } from "wagmi/providers/alchemy";
-import { publicProvider } from "wagmi/providers/public";
-
+import { polygonZkEvm, polygonZkEvmTestnet } from "wagmi/chains";
+import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
 import { Layout } from "@src/components";
 import "@src/styles/main.css";
 
-const { chains } = configureChains(
-  [goerli],
+const { chains, publicClient, webSocketPublicClient } = configureChains(
+  [polygonZkEvm, polygonZkEvmTestnet],
   [
-    alchemyProvider({
-      apiKey: process.env.NEXT_PUBLIC_NETWORK_PROVIDER,
+    jsonRpcProvider({
+      rpc: () => ({
+        http: process.env.NEXT_PUBLIC_NETWORK_PROVIDER,
+      }),
     }),
-    publicProvider(),
   ]
 );
 
@@ -42,10 +40,8 @@ const { connectors } = getDefaultWallets({
 const config = createConfig({
   autoConnect: true,
   connectors,
-  publicClient: createPublicClient({
-    chain: goerli,
-    transport: http(),
-  }),
+  publicClient,
+  webSocketPublicClient,
 });
 
 const getSiweMessageOptions: GetSiweMessageOptions = () => ({

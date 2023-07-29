@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { ethers } from "ethers";
+import { readContract } from "@wagmi/core";
 
 import abi from "@src/artifacts/contracts/Projects.json";
 import { About, Alert, Hero, Projects } from "@src/components";
@@ -10,19 +10,14 @@ import { IProject } from "@src/components/organisms/Projects/types";
 export async function getStaticProps() {
   const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS;
   const contractABI = abi.abi;
-  const provider = new ethers.AlchemyProvider(
-    "goerli",
-    process.env.NEXT_PUBLIC_NETWORK_PROVIDER
-  );
-  const ProjectsContract = new ethers.Contract(
-    contractAddress,
-    contractABI,
-    provider
-  );
 
-  const listProjects = await ProjectsContract.getAllProjects();
+  const data: any = await readContract({
+    address: `0x${contractAddress.split("0x")[1]}`,
+    abi: contractABI,
+    functionName: "getAllProjects",
+  });
 
-  const projectsCleaned = listProjects.map((project) => {
+  const projectsCleaned = data?.map((project) => {
     return {
       image: project.image,
       title: project.title,
