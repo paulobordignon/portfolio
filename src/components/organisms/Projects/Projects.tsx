@@ -6,6 +6,11 @@ import { IProject } from "./types";
 
 export function Projects({ projects }: { projects: IProject[] }) {
   const { isAdmin } = useAccount();
+  const blockExplorerUrl =
+    typeof window !== "undefined" &&
+    window.location.host.indexOf("paulobordignon.com") > -1
+      ? "https://zkevm.polygonscan.com/address/"
+      : "https://testnet-zkevm.polygonscan.com/address/";
 
   return (
     <section className="flex flex-col gap-5 mb-40 md:ml-10 px-5 pt-64 xs:px-10">
@@ -21,7 +26,7 @@ export function Projects({ projects }: { projects: IProject[] }) {
         The list below is public on the Ethereum blockchain{" "}
         <a
           className="text-primary"
-          href={`https://goerli.etherscan.io/address/${process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}`}
+          href={`${blockExplorerUrl}${process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}`}
           target={"_blank"}
           rel="noopener noreferrer"
         >

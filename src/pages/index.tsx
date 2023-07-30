@@ -17,7 +17,7 @@ export async function getStaticProps() {
     functionName: "getAllProjects",
   });
 
-  const projectsCleaned = data?.map((project) => {
+  const projectsCleaned = data?.reverse()?.map((project) => {
     return {
       image: project.image,
       title: project.title,

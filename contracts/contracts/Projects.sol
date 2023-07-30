@@ -31,13 +31,6 @@ contract Projects {
     _;
   }
 
-  function selfDestruct()
-    external
-    onlyOwner
-  {
-    selfdestruct(ownerAddress);
-  }
-
   function addProject(
     string memory _image,
     string memory _title,
