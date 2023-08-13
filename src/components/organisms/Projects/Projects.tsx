@@ -6,9 +6,9 @@ import { IProject } from "./types";
 
 export function Projects({ projects }: { projects: IProject[] }) {
   const { isAdmin } = useAccount();
+  const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS;
   const blockExplorerUrl =
-    typeof window !== "undefined" &&
-    window.location.host.indexOf("paulobordignon.com") > -1
+    contractAddress === "0x74f1E9980D91E516994E24BA0ed03F42b81b8F16"
       ? "https://zkevm.polygonscan.com/address/"
       : "https://testnet-zkevm.polygonscan.com/address/";
 
@@ -23,17 +23,20 @@ export function Projects({ projects }: { projects: IProject[] }) {
         )}
       </h3>
       <p className="text-lg text-secondaryText mb-10 text-justify">
-        The list below is public on the Ethereum blockchain{" "}
+        Most of my projects are not publicly available, but I create and
+        collaborate on open-source projects whenever possible. The list below
+        contains some of my favorite projects. (The list&apos;s data is public
+        on the Ethereum blockchain{" "}
         <a
           className="text-primary"
-          href={`${blockExplorerUrl}${process.env.NEXT_PUBLIC_CONTRACT_ADDRESS}`}
+          href={`${blockExplorerUrl}${contractAddress}`}
           target={"_blank"}
           rel="noopener noreferrer"
         >
-          in this smart contract{" "}
+          in this smart contract.{" "}
           <FiExternalLink className="hover:text-primaryHover inline align-baseline" />
         </a>
-        .
+        )
       </p>
       <ul className="flex gap-y-12 flex-wrap">
         {projects.map((project, index) => (
