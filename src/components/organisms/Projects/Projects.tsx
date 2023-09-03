@@ -33,10 +33,10 @@ export function Projects({ projects }: { projects: IProject[] }) {
           target={"_blank"}
           rel="noopener noreferrer"
         >
-          in this smart contract.{" "}
+          in this smart contract{" "}
           <FiExternalLink className="hover:text-primaryHover inline align-baseline" />
         </a>
-        )
+        . )
       </p>
       <ul className="flex gap-y-12 flex-wrap">
         {projects.map((project, index) => (

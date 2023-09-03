@@ -14,7 +14,7 @@ export function Hero() {
       <h1 className="text-5xl tracking-wide font-khand text-gradient xs:text-7xl">
         Paulo Bordignon
       </h1>
-      <h2 className="text-xl text-secondaryText">Full Stack developer.</h2>
+      <h2 className="text-xl text-secondaryText">Full Stack Engineer</h2>
       <div className="flex flex-col gap-4 xs:mt-8 mt-10 xs:flex-row">
         <Button title="Resume" />
         <ButtonWallet />
