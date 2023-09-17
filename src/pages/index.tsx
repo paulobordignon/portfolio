@@ -41,7 +41,7 @@ const Home: NextPage = ({ projects }: { projects: IProject[] }) => {
     <>
       <Head>
         <title>Paulo Bordignon</title>
-        <link rel="icon" href="/favicon.png" />
+        <link rel="icon" href="https://www.paulobordignon.com/favicon.png" />
         <link
           rel="canonical"
           href="https://paulobordignon.com/"
@@ -49,13 +49,13 @@ const Home: NextPage = ({ projects }: { projects: IProject[] }) => {
         />
         <meta
           name="description"
-          content="Paulo Bordignon is a Full-Stack engineer from Brazil who has been working since 2015 with test automation, project management, and web/mobile application development."
+          content="Full-Stack Engineer from Brazil who has been working since 2015 with test automation, project management, and web/mobile application development."
           key="desc"
         />
         <meta property="og:title" content="Paulo Bordignon" />
         <meta
           property="og:description"
-          content="Paulo Bordignon is a Full-Stack engineer from Brazil with a software engineering degree, working since 2015 with test automation, project management, and web/mobile application development."
+          content="Full-Stack Engineer from Brazil with a software engineering degree, working since 2015 with test automation, project management, and web/mobile application development."
         />
         <meta
           property="og:image"

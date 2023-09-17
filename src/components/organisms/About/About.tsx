@@ -41,7 +41,7 @@ export function About() {
         <div className="flex flex-col lg:flex-row gap-10 lg:gap-20">
           <div className="text-lg text-secondaryText text-justify basis-4/5">
             <p className="mt-2">
-              I&apos;m Paulo Bordignon, a Full-Stack Engineer from 🇧🇷, currently
+              I&apos;m Paulo Bordignon, Full-Stack Engineer from 🇧🇷, currently
               working remotely in one of the ten biggest Brazilian e-commerce,
               building new projects and integrations with third parties.
             </p>
