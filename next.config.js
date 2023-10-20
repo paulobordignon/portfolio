@@ -15,6 +15,6 @@ const nextConfig = {
 module.exports = {
   ...nextConfig,
   images: {
-    domains: ["github.com", "cloudflare-ipfs.com"],
+    domains: ["github.com", "ipfs.io"],
   },
 };

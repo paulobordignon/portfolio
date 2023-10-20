@@ -47,7 +47,7 @@ export function Card({ sequence, project }: ICard) {
       >
         <Image
           className="rounded-[10px]"
-          src={`https://cloudflare-ipfs.com/ipfs/${project.image}`}
+          src={`https://ipfs.io/ipfs/${project.image}`}
           alt="project image"
           height={600}
           width={900}
